@@ -7,12 +7,17 @@ import mongoose from 'mongoose';
 //  Description:
 //      This is the schema for the user collection in the mongodb database 
 //  Fields:
-//      name(string,required)                   - The users full name 
+//      firstName(string,required)              - The users first name  
+//      secondName(string,required)             - The users secondname 
 //      email(string,required,unique)           - Email address for the user   
 //      password(string,required)               - Users password to login 
 //      isAdmin(Boolean,required,default false) - Used for detecting admin of the site, 
 const userSchema = mongoose.Schema({
-    name: {
+    firstName: {
+        type: String,
+        required: true
+    },
+    secondName: {
         type: String,
         required: true
     },

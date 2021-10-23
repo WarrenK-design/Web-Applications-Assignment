@@ -1,6 +1,9 @@
 /// Description:
-///     This is used
+///     This is used to establish a connection to the database 
+///     If a connection cannot be established the server process will be exited      
 
+/// Imports ///
+//  mongoose - Object modelling tool for mongodb 
 import mongoose from 'mongoose';
 
 async function mongoConnect() {

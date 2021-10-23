@@ -1,10 +1,10 @@
 /// Imports ///
-// express - Package for running server 
-// dotenv  - Used for reading in .env environment variables 
-// 
+// express      - Package for running server 
+// dotenv       - Used for reading in .env environment variables 
+// mongoConnect - Function used for connecting to the mongodb database 
 import express from 'express';
 import dotenv  from 'dotenv';
-import mongoConnect from './database/db.js';
+import mongoConnect from './database/connection/db.js';
 
 /// Setup ///
 // Load the env vars 
