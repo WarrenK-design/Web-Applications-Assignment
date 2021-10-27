@@ -4,8 +4,8 @@
 /// Imports ///
 // express - The express JS module for the server, required to get router object 
 import express from 'express';
-import {authUser,getProfile} from '../controllers/userController.js';
-
+import {authUser,getProfile,regUser} from '../controllers/userController.js';
+import { protectdRoute } from '../middleware/authMiddleware.js';
 
 /// Variables ///
 //  router - The router object attahced to the express server, used to define routes for the api 
@@ -25,7 +25,14 @@ router.post('/login',authUser);
 //  Route for getting a users personal profile information 
 // Access Control:
 //  Private Route 
-router.get('/profile',getProfile);
+router.get('/profile',protectdRoute,getProfile);
+
+/// POST /user ///
+// Description:
+//  Route for creating a new user  
+// Access Control:
+//  Public Route 
+router.post('/',regUser);
 
 
 export default router;

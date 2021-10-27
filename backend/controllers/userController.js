@@ -64,13 +64,77 @@ async function authUser(req,res,next) {
 //  Private Route 
 async function getProfile(req,res,next) {
     try{
-        res.send("Success");
+        // Get the user using the req.user infor 
+        let userInfo = await User.findById(req.user._id);
+        // Check there is a user 
+        if(userInfo){
+            res.json({
+                id: userInfo._id,
+                firstName: userInfo.firstName,
+                secondName: userInfo.secondName,
+                email: userInfo.email,
+                isAdmin: userInfo.isAdmin,
+            })
+        }else{
+            // No user found, 404 no data found 
+            res.status(404);
+            next(new Error("No user data found"));
+            return;
+        }
     }catch(error){
-        // log the error then set the message to a general invalid statement 
-        error.message = "Invalid email or password"
-        res.status(401);
+        // If this block is reached then there is a server error 
+        console.error(error);
+        res.status(500);
         next(error);
     }
 }
 
-export {authUser,getProfile};
+
+/// regUser ///
+// Description:
+//  This function is used to register a new user 
+// Route:
+//  POST /user
+// Access Control:
+//  Public Route 
+async function regUser(req,res,next) {
+    try{
+        // Get the users signup info from the body 
+        let {firstName, secondName, email, password} = req.body;
+        // Check if a user by this email already exists 
+        let existingUser = await User.findOne({email});
+        if (existingUser){
+            // Bad email sent the user already exists 
+            res.status(400);
+            next(new Error("User with this email already exists"));
+            return;
+        }
+        // Create the user 
+        let user = await User.create({firstName,secondName,email,password});
+        // Check was created succesfully 
+        if(user){
+            // 201 created response 
+            res.status(201).json({
+                id: user._id,
+                firstName: user.firstName,
+                secondName: user.secondName,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                jwt: genJWT(user._id) 
+            });
+        }else{
+            // User could not be created 
+            res.status(400);
+            next(new Error('User could not be created, invalid user data'));
+            return;
+        }
+    }catch(error){
+        // If this block is reached then there is a server error 
+        console.error(error);
+        res.status(500);
+        next(error);
+    }
+}
+
+
+export {authUser,getProfile,regUser};
