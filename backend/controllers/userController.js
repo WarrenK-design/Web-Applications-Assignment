@@ -24,8 +24,7 @@ async function authUser(req,res,next) {
         if (user === null){
             // No user found for this email 
             res.status(401);
-            next(new Error("No user found relating to this email"));
-            return;
+            return next(new Error("No user found relating to this email"));
         }
         // Check if password matches, will be true or false 
         let passMatch = await user.validatePassword(password);
@@ -43,14 +42,13 @@ async function authUser(req,res,next) {
         }else{ 
             // Password entered is invalid, throw an error which will be caught  
             res.status(401);
-            next(new Error("Invalid password entry"));
-            return;
+            return next(new Error("Invalid password entry"));
         }
     }catch(error){
-        // log the error then set the message to a general invalid statement 
-        error.message = "Invalid email or password"
-        res.status(401);
-        next(error);
+        // If this statement is reached then it is an intrnal serer error that needs to be invesstigated 
+        // Set a user message to be displayed
+        res.errormessage = "Could not authenticate user at this time, sorry try again later"
+        return next(error);
     }
 }
 
@@ -78,13 +76,13 @@ async function getProfile(req,res,next) {
         }else{
             // No user found, 404 no data found 
             res.status(404);
-            next(new Error("No user data found"));
-            return;
+            res.errormessage("Profile could not be found at this time, try again later");
+            return next(new Error("User model could not find a user with specified ID but no error thrown, check for datbase issues"));
         }
     }catch(error){
         // If this block is reached then there is a server error 
         console.error(error);
-        res.status(500);
+        res.errormessage = "Could not retrieve users profile at this time, sorry try again later"
         next(error);
     }
 }
@@ -106,8 +104,8 @@ async function regUser(req,res,next) {
         if (existingUser){
             // Bad email sent the user already exists 
             res.status(400);
-            next(new Error("User with this email already exists"));
-            return;
+            res.errormessage("A user with this email already exists, try a different email")
+            return next(new Error("User model found a entry in the database which is associated to the email supplied"));
         }
         // Create the user 
         let user = await User.create({firstName,secondName,email,password});
@@ -125,12 +123,13 @@ async function regUser(req,res,next) {
         }else{
             // User could not be created 
             res.status(400);
-            next(new Error('User could not be created, invalid user data'));
-            return;
+            res.errormessage("Please check to ensure all fileds are correct, user could not be corrected")
+            return next(new Error('The user model could not create a user but did not throw an error, could possibly be database issue'));
         }
     }catch(error){
         // If this block is reached then there is a server error 
         console.error(error);
+        res.errormessage = "User could not be registered at this time, sorry try again later"
         res.status(500);
         next(error);
     }

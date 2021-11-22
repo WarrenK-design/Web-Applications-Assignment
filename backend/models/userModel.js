@@ -26,6 +26,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    profileImage: {
+        type: String,
+        default: "default_profile_image.jpg"
+    },
     email: {
         type: String,
         required: true, 

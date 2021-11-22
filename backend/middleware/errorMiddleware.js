@@ -13,10 +13,15 @@
 //      When  
 function errorHandler(err,req,res,next){
     let statusCode = null; 
-    /// Set the status code, sometimes you get a 200 even though you shsouldnt 
-    if(res.statusCode === 200){
-        statusCode = 500
-    }else{
+    // Set the status code 
+    // Check for incorrect file format message on profile picture, 
+    // this is caught by external library but we want a 422 error not 500 
+    if(err.message === "Profile picture format incorrect, jpg, gpeg or png only accepted"){
+        statusCode = 422;
+    }
+    else if(res.statusCode === 200){///Sometimes you get a 200 even though you shouldnt
+        statusCode = 500;
+    }else{ // Correct status code must have been set in the route 
         statusCode = res.statusCode;
     }
     // Set the status code for the response 
@@ -24,11 +29,12 @@ function errorHandler(err,req,res,next){
     // If we are in production just return message 
     if(process.env.NODE_ENV === 'production'){
         res.json({
-            message: err.message
+            errormessage: res.errormessage
     })
     }else{
         res.json({
-            message: err.message,
+            usererrormessage: res.errormessage,
+            tracemessage: err.message,
             trace: err.stack
     })
     }  

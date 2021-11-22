@@ -34,6 +34,12 @@ const usersData = [
         secondName: 'Doe',
         email: 'JaneDoe123@test.com',
         password: bcrypt.hashSync('abc123ABC',10),
+    },
+    {
+        firstName: 'Bob',
+        secondName: 'Ryan',
+        email: 'BobRyan123@test.com',
+        password: bcrypt.hashSync('abc123ABC',10),
     }
 ];
 

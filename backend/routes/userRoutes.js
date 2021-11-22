@@ -3,6 +3,8 @@
 
 /// Imports ///
 // express - The express JS module for the server, required to get router object 
+// 
+// protectedRoute - This middleware ensures a user is signed in 
 import express from 'express';
 import {authUser,getProfile,regUser} from '../controllers/userController.js';
 import { protectdRoute } from '../middleware/authMiddleware.js';

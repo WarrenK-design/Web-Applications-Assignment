@@ -3,11 +3,15 @@
 // dotenv       - Used for reading in .env environment variables 
 // mongoConnect - Function used for connecting to the mongodb database 
 // errorHandler - Middleware for displaying custom error messages for api
+// path         - Used for directory handling 
 import express from 'express';
 import dotenv  from 'dotenv';
 import mongoConnect from './database/connection/db.js';
-import userRoutes from './routes/userRoutes.js'
+import userRoutes from './routes/userRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 import {errorHandler} from './middleware/errorMiddleware.js'
+import path from 'path';
+
 
 /// Setup ///
 // Load the env vars 
@@ -16,10 +20,12 @@ dotenv.config();
 mongoConnect();
 
 /// Variables ///
-// app  - Express object for running server, adding middleware 
-// PORT - The port to run the server on, get it from environemnt, no env then 5000 
+// app       - Express object for running server, adding middleware 
+// PORT      - The port to run the server on, get it from environemnt, no env then 5000 
+// __dirname - Current directory 
 const app  = express();
 const PORT = process.env.PORT || 5000; 
+const __dirname = path.resolve();
 
 /// Middleware ///
 // express.json - This is a body parser for parsing JSON messages 
@@ -27,10 +33,13 @@ app.use(express.json());
 
 /// Routes ///
 app.use('/user',userRoutes);
+app.use('/uploads',uploadRoutes);
 
 /// Error MiddleWare ///
 app.use(errorHandler);
 
+// static folder - uploads folder needs to be available in the browser 
+app.use('/uploads',express.static(path.join(__dirname,'/uploads')))
 
 //Start the server listening 
 app.listen(PORT,() => console.log(`Server started on port ${PORT}`));
