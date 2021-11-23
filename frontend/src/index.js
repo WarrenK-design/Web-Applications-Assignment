@@ -5,10 +5,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Redux //
+// Redux is used to manage global state, see the store.js for the redux store implmentation 
+// Provider - Used to tell react that we are using redux by passing global store to it 
+import {Provider} from 'react-redux';
+import store from './store';
+
+
+/// Render ///
+// Render the App component to the DOM 
+// Wrapped in Provder so we can use Redux as our global store 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
