@@ -24,6 +24,7 @@ async function authUser(req,res,next) {
         if (user === null){
             // No user found for this email 
             res.status(401);
+            res.errormessage("No account linked with this email, please try again");
             return next(new Error("No user found relating to this email"));
         }
         // Check if password matches, will be true or false 
@@ -42,6 +43,7 @@ async function authUser(req,res,next) {
         }else{ 
             // Password entered is invalid, throw an error which will be caught  
             res.status(401);
+            res.errormessage("Invalid password, please try again");
             return next(new Error("Invalid password entry"));
         }
     }catch(error){
