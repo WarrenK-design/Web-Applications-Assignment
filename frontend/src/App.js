@@ -8,8 +8,8 @@
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 
 
-// CSS
-import './App.css';
+// Bootstrap 
+//import {Container} from 'react-bootstrap'
 
 /// Screens ///
 // Screens are particular view for given subdomain in the site 
@@ -29,8 +29,9 @@ import Footer from './components/Footer';
 //  using the react-router-dom library.
 function App() {
   return (
-    <Router>
+       <Router>
       <Header/>
+      <main>
       <Routes>
         <Route path="/" element={<HomeScreen/>}/>
         <Route path="/login" element={<LoginScreen/>}/>
@@ -38,6 +39,7 @@ function App() {
         <Route path="/profile" element={<ProfileScreen/>}/>
         <Route path="*" element={<NoMatchScreen/>}/>
       </Routes>
+      </main>
       <Footer />
     </Router>
   );
