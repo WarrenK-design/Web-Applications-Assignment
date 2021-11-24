@@ -11,7 +11,7 @@ function Footer() {
     <footer>
       <Container>
         <Row>
-          <Col className="text-center">
+          <Col className="text-center pb-2">
             C16463344 Warren Kavanagh
           </Col>
         </Row>

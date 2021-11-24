@@ -19,9 +19,12 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 //  Reducers can be found in the ../reducers/ directory, they update the state based on values form action functions 
 //  if there are multiple reducers which control different state need to combine them using combineReducers function 
 // userReducers - Contain reducers for the user global state 
-import { userLoginReducer } from './reducers/userReducers'; 
+//  userLoginReducer    - Reducer for setting the state of logged in users information 
+//  userRegisterReducer - Reducer used in handling registertraion of the user 
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'; 
 const reducer = combineReducers({
-    user: userLoginReducer
+    user: userLoginReducer,
+    userRegistration: userRegisterReducer
 })
 
 /// Initial State -> Persisting between sessions ///

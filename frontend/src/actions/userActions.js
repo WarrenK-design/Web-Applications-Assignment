@@ -12,7 +12,10 @@
 /// Imports ///
 // user_action_constants - These are constants defined in ../constants/userActionConstants which are used to test action.type 
 // axios - Used to make http calls to the backend 
-import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT}
+import {
+  USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT, // login and logout functions 
+  USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL // regUser functions
+}
 from '../constants/userActionConstants';
 import axios from 'axios';
 
@@ -64,5 +67,48 @@ export function logout() {
     localStorage.removeItem('userInfo');
     // Dispatch the user logout action
     dispatch({type:USER_LOGOUT})
+  }
+}
+
+/// register ///
+// Description:
+//  This function is to register a user 
+//  It submits a post request to /user with the users 
+//  email, first name, last name and password 
+// Inputs:
+//  email       - From the user register screen form 
+//  firstName   - From the user register screen form 
+//  secondName  - From the user register screen form 
+//  password    - From the user register screen form 
+export function regUser(email,firstName,secondName,password){
+   // Return a async function so we can make async calls, middle ware will pick this up 
+  return async (dispatch) => {
+    try{
+      // First initiate the request, will set loading to true
+      dispatch({type:USER_REGISTER_REQUEST})
+      // Set the http request configuration 
+      let requestConfig = {
+            method: 'post',
+            url: '/user/',
+            data: {
+                email: email,
+                firstName: firstName,
+                secondName: secondName,
+                password: password}
+      }
+      // Send the request with axios, will return users details 
+      const {data} = await axios(requestConfig);
+      // Dispatch the user register success, will set register loading false 
+      dispatch({type:USER_REGISTER_SUCCESS});
+      // Now dispatch the login success action and pass the users details in the payload, this will set user state 
+      dispatch({type:USER_LOGIN_SUCCESS,payload:data})
+      // Set the data to local storage
+      localStorage.setItem('userInfo',JSON.stringify(data))
+    }catch(error){
+      // Set the payload to the user frienly error message from the API 
+        dispatch({
+            type:USER_REGISTER_FAIL,
+            payload:error.response.data.errormessage})
+    }
   }
 }

@@ -52,7 +52,7 @@ function Header() {
        <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
         <Container>
             <Navbar.Brand as={Link} to="/">Movie Reviews</Navbar.Brand>
-            <Nav clasName="me-auto">
+            <Nav>
             {userInfo ?
             (<NavDropdown align="end" title={userInfo.firstName}>
                 

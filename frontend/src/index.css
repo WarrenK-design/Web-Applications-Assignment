@@ -1,5 +1,5 @@
 /*main tag wraps content of each page
 min-height - The min height, will push header to bottom of the page */
 main{
-  min-height: 85vh;
+  min-height: 80vh;
 }

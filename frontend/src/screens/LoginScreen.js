@@ -2,7 +2,6 @@
 //  Screen displays a login form for the user to fill out and sends request 
 //  to the backend 
 
-
 // Imports //
 // useState  - Stateful component, email and password fields, https://reactjs.org/docs/hooks-state.html
 // useEffect - After rendered to the DOM executes functionlaity, in this case will redirect if user already signed in, https://reactjs.org/docs/hooks-effect.html 
@@ -13,6 +12,9 @@ import { useNavigate,Link } from "react-router-dom";
 
 
 // Bootsrap //
+// Form    - See https://react-bootstrap.github.io/components/forms/
+// Button  - See https://react-bootstrap.github.io/components/buttons/
+// Row/Col - See https://react-bootstrap.github.io/layout/grid/ 
 import {Form,Button,Row,Col} from 'react-bootstrap';
 
 
@@ -83,8 +85,7 @@ function LoginScreen() {
     // Check if userInfo has something in it 
     if(userInfo){
       // Need to redirect 
-       //history.push('/')
-       navigate('/');
+      navigate('/');
     }
   },[userInfo,navigate])
 

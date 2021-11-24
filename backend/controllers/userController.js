@@ -125,7 +125,7 @@ async function regUser(req,res,next) {
         }else{
             // User could not be created 
             res.status(400);
-            res.errormessage = "Please check to ensure all fileds are correct, user could not be corrected";
+            res.errormessage = "Please check to ensure all fileds are correct, user could not be created";
             return next(new Error('The user model could not create a user but did not throw an error, could possibly be database issue'));
         }
     }catch(error){
