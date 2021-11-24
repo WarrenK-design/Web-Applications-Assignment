@@ -27,11 +27,13 @@ const reducer = combineReducers({
 /// Initial State -> Persisting between sessions ///
 // We can set initial values for the state, for example not requiring a user to login each time they enter the app 
 // Need to first check if there is a value in the localStorage to set the state to, if there is set it, if not will be empty 
-const userLocalStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+// userLocalStaorage - This gets the users information from local staorage and sees if it is there 
+const userLocalStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null;
 
-// startingState - efine values which are in the state when the application starts up 
+// startingState - define values which are in the state when the application starts up 
+// user - Setting the userInfo part of the user state to the users information 
 const startingState = {
-    user: userLocalStorage
+    user: {userInfo: userLocalStorage}
 };
 
 // store - This is our actual store, we pass in the reducers, startingState and then any middleware 

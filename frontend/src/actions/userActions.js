@@ -10,10 +10,11 @@
 //  by default all actions should be synchronous but api calls cannot be synchronous 
 
 /// Imports ///
-// axios - Used to make http calls to the backend 
 // user_action_constants - These are constants defined in ../constants/userActionConstants which are used to test action.type 
+// axios - Used to make http calls to the backend 
 import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL}
 from '../constants/userActionConstants';
+import axios from 'axios';
 
 /// login ///
 // Description:
@@ -22,7 +23,7 @@ from '../constants/userActionConstants';
 // Inputs:
 //  email    - The users email address 
 //  password - The users password 
-function login(email, password) {
+export function login(email, password) {
   return async (dispatch) => {
     try{
         // First initiate the request, will set loading to true
@@ -40,7 +41,7 @@ function login(email, password) {
         // Now dispatch the success action and pass the users details in the payload 
         dispatch({type:USER_LOGIN_SUCCESS,payload:data})
         // Set the data to local storage
-        localStorage.setItem('user',JSON.stringify(data))
+        localStorage.setItem('userInfo',JSON.stringify(data))
     }catch(error){
         // Set the payload to the user frienly error message from the API 
         dispatch({

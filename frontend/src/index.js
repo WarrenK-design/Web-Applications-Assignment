@@ -16,7 +16,7 @@ import store from './store';
 // Render the App component to the DOM 
 // Wrapped in Provder so we can use Redux as our global store 
 ReactDOM.render(
-  <Provider store={store}>
+   <Provider store={store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

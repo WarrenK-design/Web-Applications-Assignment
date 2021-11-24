@@ -24,7 +24,7 @@ async function authUser(req,res,next) {
         if (user === null){
             // No user found for this email 
             res.status(401);
-            res.errormessage("No account linked with this email, please try again");
+            res.errormessage = "No account linked with this email, please try again";
             return next(new Error("No user found relating to this email"));
         }
         // Check if password matches, will be true or false 
@@ -43,7 +43,7 @@ async function authUser(req,res,next) {
         }else{ 
             // Password entered is invalid, throw an error which will be caught  
             res.status(401);
-            res.errormessage("Invalid password, please try again");
+            res.errormessage= "Invalid password, please try again";
             return next(new Error("Invalid password entry"));
         }
     }catch(error){
@@ -78,7 +78,7 @@ async function getProfile(req,res,next) {
         }else{
             // No user found, 404 no data found 
             res.status(404);
-            res.errormessage("Profile could not be found at this time, try again later");
+            res.errormessage = "Profile could not be found at this time, try again later";
             return next(new Error("User model could not find a user with specified ID but no error thrown, check for datbase issues"));
         }
     }catch(error){
@@ -106,7 +106,7 @@ async function regUser(req,res,next) {
         if (existingUser){
             // Bad email sent the user already exists 
             res.status(400);
-            res.errormessage("A user with this email already exists, try a different email")
+            res.errormessage = "A user with this email already exists, try a different email";
             return next(new Error("User model found a entry in the database which is associated to the email supplied"));
         }
         // Create the user 
@@ -125,7 +125,7 @@ async function regUser(req,res,next) {
         }else{
             // User could not be created 
             res.status(400);
-            res.errormessage("Please check to ensure all fileds are correct, user could not be corrected")
+            res.errormessage = "Please check to ensure all fileds are correct, user could not be corrected";
             return next(new Error('The user model could not create a user but did not throw an error, could possibly be database issue'));
         }
     }catch(error){

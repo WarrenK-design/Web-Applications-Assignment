@@ -33,7 +33,7 @@ function errorHandler(err,req,res,next){
     })
     }else{
         res.json({
-            usererrormessage: res.errormessage,
+            errormessage: res.errormessage,
             tracemessage: err.message,
             trace: err.stack
     })

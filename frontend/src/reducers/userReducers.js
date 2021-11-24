@@ -29,7 +29,7 @@ export function userLoginReducer (state ={}, action) {
         // User has succefully logged in 
         case USER_LOGIN_SUCCESS:
             // We have the users details now 
-            return {loading: false, user: action.payload}
+            return {loading: false, userInfo: action.payload}
         // User login has failed 
         case USER_LOGIN_FAIL:
             // set the error message which will be in patload

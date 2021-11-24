@@ -7,9 +7,11 @@
 // react-router-dom - Allows rendering of components for different urls 
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 
-
-// Bootstrap 
-//import {Container} from 'react-bootstrap'
+/// bootsrap ///
+// There is a container within the main body to make is easier for page layouts, 
+// The main body page size is set in index.css 
+// Container - React bootsrap container which uses grid system, see https://react-bootstrap.github.io/layout/grid/
+import {Container} from 'react-bootstrap';
 
 /// Screens ///
 // Screens are particular view for given subdomain in the site 
@@ -29,18 +31,20 @@ import Footer from './components/Footer';
 //  using the react-router-dom library.
 function App() {
   return (
-       <Router>
-      <Header/>
-      <main>
-      <Routes>
-        <Route path="/" element={<HomeScreen/>}/>
-        <Route path="/login" element={<LoginScreen/>}/>
-        <Route path="/register" element={<RegisterScreen/>}/>
-        <Route path="/profile" element={<ProfileScreen/>}/>
-        <Route path="*" element={<NoMatchScreen/>}/>
-      </Routes>
-      </main>
-      <Footer />
+    <Router> 
+        <Header/>
+        <main>
+          <Container>
+            <Routes>
+              <Route path="/" element={<HomeScreen/>}/>
+              <Route path="/login" element={<LoginScreen/>}/>
+              <Route path="/register" element={<RegisterScreen/>}/>
+              <Route path="/profile" element={<ProfileScreen/>}/>
+              <Route path="*" element={<NoMatchScreen/>}/>
+            </Routes>
+          </Container>
+        </main>
+        <Footer />
     </Router>
   );
 }
