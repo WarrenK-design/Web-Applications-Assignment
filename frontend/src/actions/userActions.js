@@ -12,7 +12,7 @@
 /// Imports ///
 // user_action_constants - These are constants defined in ../constants/userActionConstants which are used to test action.type 
 // axios - Used to make http calls to the backend 
-import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL}
+import {USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT}
 from '../constants/userActionConstants';
 import axios from 'axios';
 
@@ -24,6 +24,7 @@ import axios from 'axios';
 //  email    - The users email address 
 //  password - The users password 
 export function login(email, password) {
+  // Return a async function so we can make async calls, middle ware will pick this up 
   return async (dispatch) => {
     try{
         // First initiate the request, will set loading to true
@@ -48,5 +49,20 @@ export function login(email, password) {
             type:USER_LOGIN_FAIL,
             payload:error.response.data.errormessage})
     } 
+  }
+}
+
+
+/// logout ///
+// Description:
+//  This function logs out the user from the application 
+//  It resets the user state and clears the users information from local storage 
+export function logout() {
+  // Return a async function so we can make async calls, middle ware will pick this up 
+  return (dispatch) => {
+    // remove the users information from localstorage 
+    localStorage.removeItem('userInfo');
+    // Dispatch the user logout action
+    dispatch({type:USER_LOGOUT})
   }
 }
