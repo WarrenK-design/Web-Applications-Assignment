@@ -57,7 +57,7 @@ function Header() {
             (<NavDropdown align="end" title={userInfo.firstName}>
                 
                 <NavDropdown.Item as={Link} to="/profile"><i className="fas fa-user px-1"></i>My Profile</NavDropdown.Item>
-                <NavDropdown.Item onClick={logoutHandler}><i class="fas fa-sign-out-alt px-1"></i>Logout</NavDropdown.Item>
+                <NavDropdown.Item onClick={logoutHandler}><i className="fas fa-sign-out-alt px-1"></i>Logout</NavDropdown.Item>
             </NavDropdown>)
             : <Nav.Link as={Link} to="/login"><i className="fas fa-user px-2"></i>Login</Nav.Link> 
             } 
@@ -67,7 +67,5 @@ function Header() {
     </header>
   );
 }
-//<LinkContainer to="/login">
-//                <Nav.Link><i className="fas fa-user px-2"></i>Login</Nav.Link>
-//              </LinkContainer>
+
 export default Header;
