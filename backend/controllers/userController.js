@@ -6,6 +6,10 @@
 // genJWT - Function for generating a JSON webtokn for a user  
 import User from '../models/userModel.js';
 import {genJWT} from '../utils/generateJWT.js'
+import path from 'path';
+
+// Set the __dirname, using modules syntax so not available by efault 
+const __dirname = path.resolve(); 
 
 /// authUser ///
 // Description:
@@ -138,4 +142,37 @@ async function regUser(req,res,next) {
 }
 
 
-export {authUser,getProfile,regUser};
+/// getProfileImage ///
+// Description:
+//  This function return a users profile image 
+// Route:
+//  GET /user/profileimage
+// Access Control:
+//  Private Route 
+async function getProfileImage(req,res,next) {
+    try{
+        // Get the reference to the users profile image in database  
+        let userProfileRef = await User.findById(req.user._id,'profileImage').exec(); 
+        // Check if there is a profileImage associated with this user 
+        if (userProfileRef.profileImage){
+            let imagePath = `${__dirname}/uploads/profileImages/${userProfileRef.profileImage}`;
+            res.sendFile(imagePath) 
+        }else{
+            // No profile image associated with this user 
+            // Sending back the default profile image and using a 200 code,
+            // reason I am using a 200 code is the request was fine and no errors there was just no data,
+            // if I wasnt sending back the default image id use 204 "No data code" but since there is something being sent back
+            // I cant use this as a 204 specifies nothings is being sent in the body  
+            let imagePath = `${__dirname}/uploads/profileImages/default_profile_image.jpg`;
+            res.sendFile(imagePath);
+        }
+    }catch(error){
+        // If this block is reached then there is a server error 
+        console.error(error);
+        res.errormessage = "Could not retrieve the users profile image at this time"
+        next(error);
+    }
+}
+
+
+export {authUser,getProfile,regUser,getProfileImage};
