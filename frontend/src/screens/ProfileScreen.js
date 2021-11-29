@@ -89,18 +89,29 @@ function ProfileScreen() {
 
 
 
-  return (
-    <Container>
-    {loading ? 
-      (<LoadingSpinner/>)
-      :<Row>
+  if(loading) {
+    return(<LoadingSpinner/>)
+  }else{
+    return(
+<Container>
+      <Row>
         <Col className="text-center">
-          <Image className="img-thumbnail mx-auto" src={`data:image/png;base64,${profileImage}`} roundedCircle />
+          <Image className="img-thumbnail mx-auto" src={`data:image/png;base64,${profileImage}`} roundedCircle fluid/>
         </Col>
       </Row> 
-    }
+      <Row>
+        <Col className="text-center">
+          <h1>{userInfo.firstName} {userInfo.secondName}</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          
+        </Col>
+      </Row>
     </Container>
-  );
+    )
+  };
 }
 
 export default ProfileScreen;

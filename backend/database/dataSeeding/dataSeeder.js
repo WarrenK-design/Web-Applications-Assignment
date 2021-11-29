@@ -11,12 +11,17 @@
 //  dotenv      - Used for reading in .env environment variables 
 //  usersData    - Users data to be seeded to the database 
 //  User        - The model for the users collection in the database 
+//  Movie       - The model for the movie collection in the datbase 
+//  movieData   - The data to insert into the movie collection 
 //  mongoConnect - Function for connecting to the database 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import usersData from '../data/users.js';
 import User from '../../models/userModel.js';
+import Movie from '../../models/movieModel.js';
+import movieData from '../data/movieData.js';
 import mongoConnect from '../connection/db.js';
+
 
 // Load environment variables from .env, needed for connection string in mongoConnect 
 dotenv.config()
@@ -32,8 +37,10 @@ async function seedData() {
         // First delete all documents from the database collections 
         // Dont want to import data if there is already data in the database 
         await User.deleteMany();
+        await Movie.deleteMany();
         // Now insert the documents using the models 
         await User.insertMany(usersData);
+        await Movie.insertMany(movieData);
         // Display success message 
         console.log("Data succesfully seeded to the database")
         // Exit the process to stop 
