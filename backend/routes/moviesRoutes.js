@@ -21,12 +21,12 @@ const router = express.Router();
 router.get('/:pageNumber',getMovies);
 
 
-/// Get /movies/:id ///
+/// Get /movies/byId/:id ///
 // Description:
 //  Route to return a specific movie identified by its id 
 // Access Control:
 //  Public Route
-router.get('/:id',getMovieById);
+router.get('/byId/:id',getMovieById);
 
 
 

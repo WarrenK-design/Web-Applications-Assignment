@@ -6,6 +6,7 @@
 /// Bootstrap ///
 // Card - Container for a card https://react-bootstrap.github.io/components/cards/
 import {Card, ListGroup, ListGroupItem} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
 /// MovieCard ///
@@ -17,10 +18,11 @@ function MovieCard({movie}){
 
 
     return(
+        <Link to={`/movie/${movie._id}`} style={{ textDecoration: 'none'}}>
         <Card className="h-100">
             <Card.Body>
-                <Card.Title>{movie.original_title}</Card.Title>
-                <Card.Text className="p">
+                <Card.Title style={{ color: 'black' }}>{movie.original_title}</Card.Title>
+                <Card.Text style={{ color: 'black' }} className="p">
                     {movie.description}
                 </Card.Text>
             </Card.Body>
@@ -31,6 +33,7 @@ function MovieCard({movie}){
                 <ListGroupItem><strong>Year:</strong> {movie.year}</ListGroupItem>
                 </ListGroup>
         </Card>
+        </Link>
         )
 
 }

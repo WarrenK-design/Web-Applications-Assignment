@@ -27,7 +27,7 @@ async function getMovies(req,res,next){
 }
 
 
-/// Get /movies/:id
+/// Get /movies/byId/:id
 // Description:
 //  Route to get a specific movie by ID 
 // Access Control:

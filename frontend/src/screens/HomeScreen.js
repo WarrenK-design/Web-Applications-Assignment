@@ -52,13 +52,15 @@ function HomeScreen() {
     //  The page number is incrmened using the buttons on the page 
     const getMovies = async () => { 
       try{
+        // Set loading true as we are calling API 
+        setLoading(true);
         // Set the request information using the pagenumber 
-        let profileImageRequest = {
+        let moviesRequest = {
             method: 'get',
             url: `/movies/${pageNum}`
             }
         // Send the request with axios, will return users details 
-        const res = await axios(profileImageRequest);
+        const res = await axios(moviesRequest);
         // Set the state for the movies and loading to false 
         setMovies(res.data);
         window.scrollTo(0, 0);
