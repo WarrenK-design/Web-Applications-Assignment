@@ -9,6 +9,7 @@ import dotenv  from 'dotenv';
 import mongoConnect from './database/connection/db.js';
 import userRoutes from './routes/userRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import movieRoutes from './routes/moviesRoutes.js';
 import {errorHandler} from './middleware/errorMiddleware.js'
 import path from 'path';
 
@@ -34,6 +35,7 @@ app.use(express.json());
 /// Routes ///
 app.use('/user',userRoutes);
 app.use('/uploads',uploadRoutes);
+app.use('/movies',movieRoutes);
 
 /// Error MiddleWare ///
 app.use(errorHandler);

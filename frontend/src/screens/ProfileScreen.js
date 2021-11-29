@@ -55,8 +55,6 @@ function ProfileScreen() {
       try{
         // Check if userInfo has something in it 
         if(userInfo){
-          // Make a call to backend to get the profile image of user 
-          console.log("We madd it")
           // Set the http request configuration 
           let profileImageRequest = {
             method: 'get',

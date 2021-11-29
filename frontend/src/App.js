@@ -20,6 +20,7 @@ import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import NoMatchScreen from './screens/NoMatchScreen';
+import MovieScreen from './screens/MovieScreen';
 
 /// Components ///
 import Header from './components/Header';
@@ -40,6 +41,7 @@ function App() {
               <Route path="/login" element={<LoginScreen/>}/>
               <Route path="/register" element={<RegisterScreen/>}/>
               <Route path="/profile" element={<ProfileScreen/>}/>
+              <Route path="/movie/:id" element={<MovieScreen/>}/>
               <Route path="*" element={<NoMatchScreen/>}/>
             </Routes>
           </Container>

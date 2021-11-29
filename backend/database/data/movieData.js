@@ -962,7 +962,7 @@ const movieData = [
       "Embeth Davidtz",
       " Malgorzata Gebel"
    ],
-   "description": "In German-occupied Poland during World War II, industrialist",
+   "description": "Oskar Schindler, a German industrialist and member of the Nazi party, tries to save his Jewish employees after witnessing the persecution of Jews in Poland.",
    "usa_gross_income": 96898818,
    "worldwide_gross_income": 322287794
 },
@@ -1088,7 +1088,7 @@ const movieData = [
       "Rob Reiner",
       " Jon Bernthal"
    ],
-   "description": "Based on the true story of",
+   "description": "Introduced to life in the fast lane through stockbroking, Jordan Belfort takes a hit after a Wall Street crash. He teams up with Donnie Azoff, cheating his way to the top as his relationships slide.",
    "usa_gross_income": 116900694,
    "worldwide_gross_income": 392000694
 },
@@ -1597,7 +1597,7 @@ const movieData = [
    "worldwide_gross_income": 132511035
 },
  {
-   "original_title": "LÃ©on",
+   "original_title": "Leon",
    "year": 1994,
    "genre": [
       "Action",
@@ -1634,7 +1634,7 @@ const movieData = [
       "Willi One Blood",
       " Don Creech"
    ],
-   "description": "Mathilda, a 12-year-old girl, is reluctantly taken in by LÃ©on, a professional assassin, after her family is murdered. An unusual relationship forms as she becomes his protÃ©gÃ©e and learns the assassin's trade.",
+   "description": "Mathilda, a 12-year-old girl, is reluctantly taken in by Leon, a professional assassin, after her family is murdered. An unusual relationship forms as she becomes his protege and learns the assassin's trade.",
    "usa_gross_income": 19501238,
    "worldwide_gross_income": 19552639
 },
@@ -1718,7 +1718,7 @@ const movieData = [
       "Frank Sivero",
       " Tony Darrow"
    ],
-   "description": "The story of",
+   "description": "Young Henry Hill, with his friends Jimmy and Tommy, begins the climb from being a petty criminal to a gangster on the mean streets of New York.",
    "usa_gross_income": 46836214,
    "worldwide_gross_income": 46879633
 },
@@ -2894,7 +2894,7 @@ const movieData = [
       "Adam Goldberg",
       " Josh Lucas"
    ],
-   "description": "After",
+   "description": "John Nash, a brilliant but asocial mathematical genius, finds his life changing for the worse after he accepts an assignment from William Parcher.",
    "usa_gross_income": 170742341,
    "worldwide_gross_income": 316791257
 },
@@ -2936,7 +2936,7 @@ const movieData = [
       "Amy Adams",
       " James Brolin"
    ],
-   "description": "A seasoned FBI agent pursues",
+   "description": "Notorious con artist Frank Abagnale has duped people worth millions of dollars with his masterful art of deception. With his scams getting bolder, he is soon pursued by FBI agent Carl Hanratty.",
    "usa_gross_income": 164615351,
    "worldwide_gross_income": 352114312
 },
@@ -3314,7 +3314,7 @@ const movieData = [
       "Jeremy Renner",
       " Don Cheadle"
    ],
-   "description": "After the devastating events of",
+   "description": "After Thanos, an intergalactic warlord, disintegrates half of the universe, the Avengers must reunite and assemble again to reinvigorate their trounced allies and restore balance.",
    "usa_gross_income": 858373000,
    "worldwide_gross_income": 2797800564
 },
@@ -4952,7 +4952,7 @@ const movieData = [
       "Matthew Beard",
       " Charles Dance"
    ],
-   "description": "During World War II, the English mathematical genius",
+   "description": "Alan Turing, a British mathematician, joins the cryptography team to decipher the German enigma code. With the help of his fellow mathematicians, he builds a machine to crack the codes.",
    "usa_gross_income": 91125683,
    "worldwide_gross_income": 233555708
 },
@@ -5414,7 +5414,7 @@ const movieData = [
       "Paul Trussell",
       " Adrian Scarborough"
    ],
-   "description": "The story of",
+   "description": "King George VI tries to overcome his stammering problem with the help of speech therapist Lionel Logue and makes himself worthy enough to lead his country through World War II.",
    "usa_gross_income": 138797449,
    "worldwide_gross_income": 427374317
 },
@@ -5666,7 +5666,7 @@ const movieData = [
       "Kelsey Scott",
       " QuvenzhanÃ© Wallis"
    ],
-   "description": "In the antebellum United States,",
+   "description": "Solomon Northup, a free African-American, is promised a fortnightly job by Brown and Hamilton. However, after arriving in Washington DC, he realises that he has been sold into slavery.",
    "usa_gross_income": 56671993,
    "worldwide_gross_income": 187733202
 },
@@ -5876,7 +5876,7 @@ const movieData = [
       "Patrick Mapel",
       " Andrew Garfield"
    ],
-   "description": "As Harvard student",
+   "description": "Mark Zuckerberg creates a social networking site, Facebook, with his friend Eduardo's help. Though it turns out to be a successful venture, he severs ties with several people along the way.",
    "usa_gross_income": 96962694,
    "worldwide_gross_income": 224920315
 },
@@ -9404,7 +9404,7 @@ const movieData = [
       "Michael Palin",
       " Connie Booth"
    ],
-   "description": "King Arthur (",
+   "description": "King Arthur and his Knights of the Round Table embark on a surreal, low-budget search for the Holy Grail, encountering many, very silly obstacles.",
    "usa_gross_income": 1827696,
    "worldwide_gross_income": 1938877
 },
@@ -11546,7 +11546,7 @@ const movieData = [
       "Aidan Gillen",
       " Allen Leech"
    ],
-   "description": "The story of the legendary British rock band",
+   "description": "The story of the legendary British rock band Queen.",
    "usa_gross_income": 216668042,
    "worldwide_gross_income": 906884690
 },
@@ -12008,7 +12008,7 @@ const movieData = [
       "David Calder",
       " Natalie Dormer"
    ],
-   "description": "The merciless 1970s rivalry between Formula One rivals",
+   "description": "James Hunt and Niki Lauda, two extremely skilled Formula One racers, have an intense rivalry with each other. However, it is their enmity that pushes them to their limits.",
    "usa_gross_income": 26947624,
    "worldwide_gross_income": 96983009
 },
@@ -12302,7 +12302,7 @@ const movieData = [
       "Roman Guerriero",
       " James Lugton"
    ],
-   "description": "World War II American Army Medic",
+   "description": "The film focuses on the World War II experiences of Desmond Doss, an American pacifist combat medic who, as a Seventh-day Adventist Christian, refused to carry or use a weapon or firearm of any kind.",
    "usa_gross_income": 67209615,
    "worldwide_gross_income": 180450918
 },
@@ -12764,7 +12764,7 @@ const movieData = [
       "Mahat M. Ali",
       " Michael Chernus"
    ],
-   "description": "The true story of Captain",
+   "description": "Somali pirates attack the Maersk Alabama, a container ship, while it is on its course to Kenya. Richard Phillips, the captain of the ship, uses his wits to negotiate with them to save his crew.",
    "usa_gross_income": 107100855,
    "worldwide_gross_income": 218791811
 },
@@ -15410,7 +15410,7 @@ const movieData = [
       "Saul Rubinek",
       " Frances Fisher"
    ],
-   "description": "Retired Old West gunslinger William Munny (",
+   "description": "William Munny, a widower with two young kids and a retired gunfighter, gives up everything after marriage. However, things change when Schofield Kid brings him an irrefutable offer.",
    "usa_gross_income": 101157447,
    "worldwide_gross_income": 159157447
 },
@@ -15956,7 +15956,7 @@ const movieData = [
       "Christine Ebersole",
       " Jeffrey Jones"
    ],
-   "description": "The life, success and troubles of",
+   "description": "Antonio Salieri envies Mozart whom he believes to be a great musician. Having come to the conclusion that Mozart receives divine assistance in his compositions, Salieri turns against God.",
    "usa_gross_income": 51973029,
    "worldwide_gross_income": 52066791
 },
@@ -18392,7 +18392,7 @@ const movieData = [
       "Jack McGee",
       " Melissa McMeekin"
    ],
-   "description": "Based on the story of",
+   "description": "Micky Ward, a struggling boxer, teams up with his older half-brother Dicky Eklund, a recovering cocaine addict, to get his career back on track.",
    "usa_gross_income": 93617009,
    "worldwide_gross_income": 129190869
 },
@@ -19148,7 +19148,7 @@ const movieData = [
       "Jonathan Rhys Meyers",
       " Keri Russell"
    ],
-   "description": "IMF agent Ethan Hunt comes into conflict with a dangerous and sadistic arms dealer who threatens his life and his fiancÃ©e in response.",
+   "description": "IMF agent Ethan Hunt comes into conflict with a dangerous and sadistic arms dealer who threatens his life and his fiancé in response.",
    "usa_gross_income": 134029801,
    "worldwide_gross_income": 398479497
 },
@@ -19904,7 +19904,7 @@ const movieData = [
       "Theresa Saldana",
       " Mario Gallo"
    ],
-   "description": "The life of boxer",
+   "description": "A middleweight ascends through the ranks to achieve his first shot at a boxing title. But his personal life, laden with paranoia, jealousy and rage, scuttles his professional growth.",
    "usa_gross_income": 23383987,
    "worldwide_gross_income": 23402427
 },
@@ -20786,7 +20786,7 @@ const movieData = [
       "Zendaya",
       " Jacob Batalon"
    ],
-   "description": "Following the events of",
+   "description": "Peter Parker, the beloved superhero Spider-Man, faces four destructive elemental monsters while on holiday in Europe. Soon, he receives help from Mysterio, a fellow hero with mysterious origins.",
    "usa_gross_income": 390532085,
    "worldwide_gross_income": 1131927996
 },
