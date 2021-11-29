@@ -30,7 +30,7 @@ import { Container,Row,Col,Card, ListGroup, ListGroupItem} from "react-bootstrap
 function MovieScreen() {
     /// State ///
     // loading      - This is to first wait untill all the relevant information has been retrieved from backend
-    // movies       - This is to hold the movie returned from the API 
+    // movie       - This is to hold the movie returned from the API 
     // error        - If there is an error returned from the API call to get the movie need to set it so is displayed 
     const [loading, setLoading] = useState(true);
     const [movie, setMovie]   = useState('');
@@ -38,41 +38,47 @@ function MovieScreen() {
 
     /// id ///
     // This is passed as a url param as it is a dynamic route 
-     let {id} = useParams();
+    const {id} = useParams();
 
     /// useEffect ///
-  // Description:
-  //  This makes the API call to get the movie a t /movies/:id
-  //  Is executed once the component renders, component renders loading first due to loading state
-  useEffect (() => {
-    /// getMovie ///
     // Description:
-    //  Makes a GET request to the backend route /movies/:id 
-    const getMovie = async () => { 
-      try{
-        // Set the request information using the id 
-        let movieRequest = {
-            method: 'get',
-            url: `/movies/byId/${id}`
-            }
-        // Send the request with axios, will return users details 
-        const res = await axios(movieRequest);
-        // Set the state for the movies and loading to false 
-        setMovie(res.data);
-        setLoading(false);
-      }catch(error){
-        // Log the error 
-        console.log(error);        
-        // Set the human readible message to be displayed on the page 
-        setError(error.response.data.errormessage);
-        setLoading(false);
-      }
-    }
-    // Call get movies 
-    getMovie();
-  },[]) // Anytime page number changes run this function 
+    //  This makes the API call to get the movie a t /movies/:id
+    //  Is executed once the component renders, component renders loading first due to loading state
+    useEffect (() => {
+        /// getMovie ///
+        // Description:
+        //  Makes a GET request to the backend route /movies/:id 
+        const getMovie = async () => { 
+          try{
+            // Request is being sent set loading true 
+            setLoading(true);
+            // Set the request information using the id 
+            let movieRequest = {
+                method: 'get',
+                url: `/movies/byId/${id}`
+                }
+            // Send the request with axios, will return users details 
+            const res = await axios(movieRequest);
+            // Set the state for the movies and loading to false 
+            setMovie(res.data);
+            console.log(res.data);
+            setLoading(false);
+          }catch(error){
+            // Log the error 
+            console.log(error);        
+            // Set the human readible message to be displayed on the page 
+            setError(error.response.data.errormessage);
+            setLoading(false);
+          }
+        }
+        // Call get movies 
+        getMovie();
+  },[])
 
     /// return ///
+    // Loading = True -> Return LoadingSpinner
+    // error   = True -> Return MessageAlert and pass the user friendly error returend from API to user 
+    // error & Loading = False -> Return a the movie screen components
     return(
     <>
       {loading ? <LoadingSpinner/> : error ? <MessageAlert variant="danger">{error}</MessageAlert>:
@@ -89,6 +95,9 @@ function MovieScreen() {
                 <h2>Details</h2>
                 <MovieDetails movie={movie} />
             </Col>
+            <Row>
+                <h2>Reviews</h2>
+            </Row>
       </Container>
       }
       </> 

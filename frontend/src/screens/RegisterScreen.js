@@ -118,6 +118,7 @@ function RegisterScreen() {
       {error && <MessageAlert variant='danger'>{error}</MessageAlert>}
       {loading && <LoadingSpinner/>}
       {errorMessage && <MessageAlert variant="danger">{errorMessage}</MessageAlert>}
+      <h1 className="pt-2"style={{textAlign:'center'}}>Register</h1> 
         <Form onSubmit={handleSubmit}>
         <Form.Group className="py-2" controlId="email">
           <Form.Label>Email address</Form.Label>
