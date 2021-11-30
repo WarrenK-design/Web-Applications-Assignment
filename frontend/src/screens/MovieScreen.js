@@ -3,7 +3,7 @@
 //  This is a dynamic route having the url /movie/:id
 
 /// Imports ///
-// useState  - Stateful component, email and password fields, https://reactjs.org/docs/hooks-state.html
+// useState  - Stateful component, https://reactjs.org/docs/hooks-state.html
 // useEffect - After rendered to the DOM executes functionlaity, in this case will redirect if user already signed in, https://reactjs.org/docs/hooks-effect.html 
 // useParams - Used to get the id from the url params 
 // axios     - Used for sending http requests to backend 
@@ -19,7 +19,7 @@ import axios from 'axios';
 import LoadingSpinner from "../components/LoadingSpinner";
 import MessageAlert from "../components/MessageAlert";
 import MovieDetails from '../components/MovieDetails';
-import Reviews      from '../components/Reviews';
+import Review      from '../components/Review';
 
 
 /// Bootstrap ///
@@ -206,8 +206,7 @@ function MovieScreen() {
                               value={i}
                               onClick={(e) => {
                                 e.preventDefault();
-                                setScore(i)
-                                console.log(score)}
+                                setScore(i)}
                               }
                             > 
                               {i}                            
@@ -243,7 +242,19 @@ function MovieScreen() {
             }
             <Row>
               <Col>
-                <Reviews reviews={movie.reviews}/>
+              {movie.reviews.length > 0 ?
+              (movie.reviews.map((review) =>(<Review movieId={movie._id} review={review}> </Review>)))
+              :
+              <Card className="mb-3">
+                <Card.Body>
+                    <Card.Title>No Reviews Yet</Card.Title>
+                    <Card.Text>
+                        No reviews have been posted for this film yet!
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+              }
+               
               </Col>
             </Row>
       </Container>
@@ -251,5 +262,5 @@ function MovieScreen() {
       </> 
 );
 }
-
+ //<Reviews movieId={movie._id} reviews={movie.reviews}/>
 export default MovieScreen;
