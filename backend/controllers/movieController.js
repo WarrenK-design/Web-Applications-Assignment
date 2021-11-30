@@ -56,15 +56,18 @@ async function postMovieReview(req,res,next){
         /// Get the comments and score from body, note score must be a string but saved as a number in mongo 
         let comments = req.body.comments;
         let score    = req.body.score;
+        let headline = req.body.headline;
         
         /// Check that the comments and score has been sent 
-        if(comments && score){
+        if(comments && score && headline){
             // Need to first find the movie 
             const movie = await Movie.findById(req.params.id);
             let review = {
                     reviewer:req.user._id,
                     comments:comments,
-                    score:score
+                    score:score,
+                    headline:headline,
+                    createdAt: Date.now()
                 }
             // Push the new review to the Model
             await movie.reviews.push(review);

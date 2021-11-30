@@ -71,8 +71,10 @@ const movieSchema = mongoose.Schema({
     reviews:[
         {
             reviewer:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'User'},
+            headline:{type:String,required:true},
             comments:{type:String,required:true},
-            score:{type:Number,required:true}
+            score:{type:Number,required:true},
+            createdAt:{type:Date,required:true}
         }
     ]
 

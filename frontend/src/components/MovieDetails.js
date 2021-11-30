@@ -15,7 +15,7 @@ import { Container,Row,Col,Card, ListGroup, ListGroupItem} from "react-bootstrap
 //  movie - An individual movie object 
 function MovieDetails({movie}){
     return(
-        <ListGroup variant="flush">
+        <ListGroup variant="flush" className="mb-3">
             <ListGroup.Item>
                 <Row>
                     <Col><strong>Year</strong></Col>

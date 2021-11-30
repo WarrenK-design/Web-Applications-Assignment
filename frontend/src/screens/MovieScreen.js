@@ -14,9 +14,12 @@ import { useParams } from 'react-router-dom';
 // LoadingSpinner - Component to show a spinner when data is loading  
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
 // MovieDetails   - Component to display the movie details 
+// Reviews        - Component used to hold a review 
 import LoadingSpinner from "../components/LoadingSpinner";
 import MessageAlert from "../components/MessageAlert";
 import MovieDetails from '../components/MovieDetails';
+import Reviews      from '../components/Reviews';
+
 
 /// Bootstrap ///
 // Container - Used to structure component 
@@ -64,6 +67,7 @@ function MovieScreen() {
             console.log(res.data);
             setLoading(false);
           }catch(error){
+
             // Log the error 
             console.log(error);        
             // Set the human readible message to be displayed on the page 
@@ -97,6 +101,9 @@ function MovieScreen() {
             </Col>
             <Row>
                 <h2>Reviews</h2>
+                <Col>
+                <Reviews reviews={movie.reviews}/>
+                </Col>
             </Row>
       </Container>
       }
