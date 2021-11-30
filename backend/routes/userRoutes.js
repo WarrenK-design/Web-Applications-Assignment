@@ -6,7 +6,7 @@
 // 
 // protectedRoute - This middleware ensures a user is signed in 
 import express from 'express';
-import {authUser,getProfile,regUser,getProfileImage} from '../controllers/userController.js';
+import {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies} from '../controllers/userController.js';
 import { protectdRoute } from '../middleware/authMiddleware.js';
 
 /// Variables ///
@@ -14,6 +14,13 @@ import { protectdRoute } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 /// Routes ///
+
+/// POST /user ///
+// Description:
+//  Route for creating a new user  
+// Access Control:
+//  Public Route 
+router.post('/',regUser);
 
 /// POST /user/login ///
 // Description:
@@ -36,14 +43,19 @@ router.get('/profile',protectdRoute,getProfile);
 //  Private Route 
 router.get('/profileimage',protectdRoute,getProfileImage);
 
-
-
-/// POST /user ///
+/// POST /user/myMovies
 // Description:
-//  Route for creating a new user  
+//  Route for adding a movie my movies 
 // Access Control:
-//  Public Route 
-router.post('/',regUser);
+//  Private Route
+router.post('/mymovies',protectdRoute,postMyMovies)
+
+/// DELETE /user/myMovies
+// Description:
+//  Route for deleteing a movie from my movies 
+// Access Control:
+//  Private Route
+router.delete('/mymovies',protectdRoute,deleteMyMovies)
 
 
 export default router;

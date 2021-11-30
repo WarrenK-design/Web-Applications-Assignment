@@ -69,16 +69,10 @@ async function authUser(req,res,next) {
 async function getProfile(req,res,next) {
     try{
         // Get the user using the req.user infor 
-        let userInfo = await User.findById(req.user._id);
+        let userInfo = await User.findById(req.user._id).populate('myMovies.movie','-password');
         // Check there is a user 
         if(userInfo){
-            res.json({
-                id: userInfo._id,
-                firstName: userInfo.firstName,
-                secondName: userInfo.secondName,
-                email: userInfo.email,
-                isAdmin: userInfo.isAdmin,
-            })
+            res.json(userInfo); 
         }else{
             // No user found, 404 no data found 
             res.status(404);
@@ -174,5 +168,110 @@ async function getProfileImage(req,res,next) {
     }
 }
 
+/// postMyMovies ///
+// Description:
+//  This function adds a new movie to a users myMovies array associated with the user 
+// Route:
+//  POST /user/mymovies
+// Access Control:
+//  Private 
+async function postMyMovies(req,res,next){
+    try{
+        /// Get the movie id from the request body -> movie id only sent as reference is stored look at user model
+        // movieExists - Used to set flag if movie already exists in database
+        let movieId = req.body.movieId;
+        let movieExists = false; 
+        /// Check that the movieId has been sent 
+        if(movieId){
+            // Get the user 
+            let user = await User.findById(req.user._id);
+            user.myMovies.map(movieObj => {
+                // If this movie is already in the users myMovies dont add it again 
+                if(movieId == movieObj.movie.toString()){
+                    // Set the falg to true and return from map 
+                    movieExists = true;
+                    return
+                }
+            })
+            // If movieExists then need to return here dont add duplicate 
+            if(movieExists){
+                // Movie already in the myMovies collection, 409 => Conflict 
+                res.status(409);
+                res.errormessage = "This movie already exists within yout movie collection";
+                return next(new Error('The movie Id sent already has an entry within the users my movie section'));
+            }else{
+                // Create document to be added to myMovies 
+                let newMovie = {movie: movieId};
+                // Push the new review to the Model
+                await user.myMovies.push(newMovie);
+                let updatedUser = await user.save();
+                // Return the updated movie with the new review
+                res.json(updatedUser);
+            }
+        }else{
+            // Bad data has been sent 
+            res.status(400);
+            res.errormessage = "Please check to ensure that a movie has been selected to be added";
+            return next(new Error('The movie ID is not being detected in the http request body, possibly error with parser or the request from front end'));
+        }
+    }catch(error){
+         // If this block is reached then there is a server error 
+        console.error(error);
+        res.errormessage = "Could not add this movie to your movies at this time please try again later"
+        next(error);
+    }
+}
 
-export {authUser,getProfile,regUser,getProfileImage};
+/// postMyMovies ///
+// Description:
+//  This function deletes a movie from the mymovies section identified by movie id sent in body 
+// Route:
+//  DELETE /user/mymovies
+// Access Control:
+//  Private 
+async function deleteMyMovies(req,res,next){
+    try{
+        /// Get the movie id from the request body -> movie id only sent as reference is stored look at user model
+        /// objId - This is the object id which the movie is associated with in the myMovies array 
+        let movieId = req.body.movieId;
+        let objId   = "";
+        /// Check that the movieId has been sent 
+        if(movieId){
+            // Get the user object 
+            const user = await User.findById(req.user._id);
+            // Get the objId for the target movie 
+            user.myMovies.map(movieObj => {
+                // If the movie is found in users myMovies get the ID 
+                if(movieId == movieObj.movie.toString()){
+                    // Set the id, used to delete the object 
+                    objId = movieObj._id;
+                    return
+                }
+            })
+            // Record of movie selected to be deleted is in myMovies section 
+            if(objId){
+                // Pull the movie from the myMovies array using the objId, save the user and return result 
+                await user.myMovies.pull(objId);
+                let updatedUser = await user.save();
+                res.json(updatedUser);
+            }else{
+                // No movie with that id has been found 
+                res.status(404);
+                res.errormessage = "Please ensure the selected movie to be deleted is in your movie section";
+                return next(new Error('There is no record of the movie ID selected to be deleted associated with the user'));
+            }
+        }else{
+            // Bad data has been sent 
+            res.status(400);
+            res.errormessage = "Please check to ensure a movie has been selected to be deleted";
+            return next(new Error('The movie ID is not being detected in the http request body, possibly error with parser or the request from front end'));
+        }
+    }catch(error){
+         // If this block is reached then there is a server error 
+        console.error(error);
+        res.errormessage = "Could not delete this movie from your movies at this time please try again later"
+        next(error);
+    }
+}
+
+export {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies};

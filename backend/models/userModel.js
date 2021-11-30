@@ -16,7 +16,8 @@ import bcrypt from 'bcryptjs';
 //      secondName(string,required)             - The users secondname 
 //      email(string,required,unique)           - Email address for the user   
 //      password(string,required)               - Users password to login 
-//      isAdmin(Boolean,required,default false) - Used for detecting admin of the site, 
+//      isAdmin(Boolean,required,default false) - Used for detecting admin of the site
+//      myMovies(Array to Movie refs)           - Array which a user can add there favourite movies to 
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -43,7 +44,12 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    myMovies:[
+        {
+            movie:{type:mongoose.Schema.Types.ObjectId,required:true,ref:'Movie'}
+        }
+    ]
 },{
     timestamps: true
 }

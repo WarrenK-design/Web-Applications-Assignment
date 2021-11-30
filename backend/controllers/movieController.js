@@ -109,7 +109,7 @@ async function deleteMovieReview(req,res,next){
             if(!review){
                 res.status(404);
                 res.errormessage = "No review associated with this Id found";
-                return next(new Error('Theere is no record of the Id associated with a review'));
+                return next(new Error('There is no record of the Id associated with a review'));
             }
             // Compare that the req.user._id object is equal to the review.reviewr object
             // i.e the person delteing the comment has to be the person who created the comment 
@@ -120,7 +120,7 @@ async function deleteMovieReview(req,res,next){
                 res.json(updatedMovie);
             }else{
                 res.status(401);
-                res.errormessage = "Comment that does not belong to you cannot be deleted";
+                res.errormessage = "Review that does not belong to you cannot be deleted";
                 return next(new Error('The user has attempted to delete a comment which does not belong to them'));
             }
         }else{
