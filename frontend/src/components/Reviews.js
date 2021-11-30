@@ -11,9 +11,19 @@ import {Card, ListGroup} from "react-bootstrap";
 // Props:
 //  reviews - An array of reviews associated with a gven film. Each item in the array has a reviewer, comments and score associated with it 
 function Reviews({reviews}){
-    console.log("I AM HERE")
-
-    return(
+    if(reviews.length === 0){
+        return(
+            <Card className="mb-3">
+                <Card.Body>
+                    <Card.Title>No Reviews Yet</Card.Title>
+                    <Card.Text>
+                        No reviews have been posted for this film yet!
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        );
+    }else{
+        return(
         <>
             {reviews.map((review) =>(
             <Card key={review._id} className="mb-3">
@@ -29,13 +39,11 @@ function Reviews({reviews}){
                     {review.comments}
                 </Card.Text>
                 </Card.Body>
-                
             </Card>
         ))}
         </>
-
-    )
-
+        );
+    }
 }
 //
 export default Reviews;

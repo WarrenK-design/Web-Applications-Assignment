@@ -18,7 +18,7 @@ import {Alert} from 'react-bootstrap';
 function MessageAlert ({variant,children}) {
     // Set the variant and place the children inside to be displayed 
     return(
-        <Alert variant={variant}>
+        <Alert className="m-3" variant={variant}>
             {children}
         </Alert>
     );
