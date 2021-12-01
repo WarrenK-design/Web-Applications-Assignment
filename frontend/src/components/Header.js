@@ -51,7 +51,7 @@ function Header() {
     <header className="pb-4">
        <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-            <Navbar.Brand as={Link} to="/">Movie Reviews</Navbar.Brand>
+            <Navbar.Brand as={Link} to="/"><i className="fas fa-video px-1"></i>Movie Reviews</Navbar.Brand>
             <Nav>
             {userInfo ?
             (<NavDropdown align="end" title={userInfo.firstName}>

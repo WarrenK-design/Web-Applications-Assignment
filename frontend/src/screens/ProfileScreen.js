@@ -16,12 +16,13 @@ import axios from 'axios';
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
 import LoadingSpinner from "../components/LoadingSpinner";
 import MessageAlert from "../components/MessageAlert";
+import MovieCard from "../components/MovieCard";
 
 /// Bootstrap ///
 // Container - Used to structure component 
 // Row       - Container divided up into rows 
 // Col       - Each row can have multiple columns  
-import { Container,Row,Col,Image } from "react-bootstrap";
+import { Container,Row,Col,Image,Card } from "react-bootstrap";
 
 // Redux //
 // useSelector - Used to get the redux global state  https://react-redux.js.org/api/hooks
@@ -67,7 +68,6 @@ function ProfileScreen() {
           // Send the request with axios, will return users details 
           const res = await axios(profileImageRequest);
           let image = Buffer.from(res.data, 'binary').toString('base64')
-          console.log(image)
           //console.log(JSON.stringify(res.data));
           // Set the profile image 
           setProfileImage(image);
@@ -85,14 +85,12 @@ function ProfileScreen() {
   },[userInfo,navigate])
 
 
-
-
-  if(loading) {
-    return(<LoadingSpinner/>)
-  }else{
-    return(
+return(
 <Container>
-      <Row>
+  {loading ? (<LoadingSpinner/>)
+  :
+  <>
+  <Row>
         <Col className="text-center">
           <Image className="img-thumbnail mx-auto" src={`data:image/png;base64,${profileImage}`} roundedCircle fluid/>
         </Col>
@@ -102,14 +100,30 @@ function ProfileScreen() {
           <h1>{userInfo.firstName} {userInfo.secondName}</h1>
         </Col>
       </Row>
-      <Row>
-        <Col>
-          
-        </Col>
-      </Row>
+      <Card>
+        <Card.Body>
+          <Card.Title><h2>My Movies</h2></Card.Title>
+      {userInfo.myMovies.length > 0 ?(
+        <Row md={2} xs={1}>
+          {userInfo.myMovies.map((movieObj) =>(
+          <Col className="py-2" key={movieObj._id}>
+            <MovieCard movie={movieObj.movie}/>
+          </Col>
+        ))} 
+        </Row> 
+      )
+      :<Card.Text>
+        Looks like you have no movies on your list yet.
+        You can add a film to the My Movies section by clciking on the "Add to My Movies"
+        button in each of the movies pages. 
+        Explore some films <Link className='pl-1' to='/'>here</Link>
+        </Card.Text>} 
+      </Card.Body>
+      </Card>
+    </>
+}     
     </Container>
     )
   };
-}
 
 export default ProfileScreen;
