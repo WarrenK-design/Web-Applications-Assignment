@@ -4,7 +4,7 @@
 
 /// Imports ///
 // useState  - Stateful component, https://reactjs.org/docs/hooks-state.html
-// useEffect - After rendered to the DOM executes functionlaity, in this case will redirect if user already signed in, https://reactjs.org/docs/hooks-effect.html 
+// useEffect - After rendered to the DOM executes functionlaity, https://reactjs.org/docs/hooks-effect.html 
 // useParams - Used to get the id from the url params 
 // axios     - Used for sending http requests to backend 
 import {useState,useEffect} from 'react';
@@ -20,7 +20,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import MessageAlert from "../components/MessageAlert";
 import MovieDetails from '../components/MovieDetails';
 import Review      from '../components/Review';
-
+import AddDeleteMyMovie from '../components/AddDeleteMyMovie';
 
 /// Bootstrap ///
 // Container - Used to structure component 
@@ -30,7 +30,8 @@ import {Container,Row,Col,Form,Card,Button,Dropdown} from "react-bootstrap";
 
 // Redux //
 // Want to give the user an option to submit a review if they are logged in 
-// useSelector - Used to get the redux global state  https://react-redux.js.org/api/hooks
+// useSelector     - Used to get the redux global state  https://react-redux.js.org/api/hooks
+// updateMovieList - This action is used to update the movie list adding/deleting movies 
 import {useSelector} from 'react-redux';
 
 /// MovieScreen
@@ -38,45 +39,46 @@ import {useSelector} from 'react-redux';
 //  This component will display an individual movie on the webpage 
 function MovieScreen() {
     /// State ///
-    // loading      - This is to first wait untill all the relevant information has been retrieved from backend
-    // movie       - This is to hold the movie returned from the API 
-    // error        - If there is an error returned from the API call to get the movie need to set it so is displayed 
-    // headline     - headline user supplies for a movie review 
-    // score        - This is the score the user gives when reviewing the movie 
-    // comments     - The comments a user supplies with there review 
-    const [loading, setLoading]   = useState(true);
-    const [movie, setMovie]       = useState('');
-    const [error, setError]       = useState("");
-    const [headline,setHeadline]  = useState("");
-    const [score, setScore]       = useState(0);
-    const [comments, setComments] = useState("");
-    const [reviewError,setReviewError]     = useState("");
-    const [reviewMessage,setReviewMessage] = useState("");
-    const [reviewLoading,setReviewLoading] = useState(false);
+    // loading                - This is to first wait untill all the relevant information has been retrieved from backend
+    // movie                  - This is to hold the movie returned from the API 
+    // error                  - If there is an error returned from the API call to get the movie need to set it so is displayed 
+    // headline               - headline user supplies for a movie review 
+    // score                  - This is the score the user gives when reviewing the movie 
+    // comments               - The comments a user supplies with there review 
+    // reviewError            - When a user submits a review if there is an error this is set 
+    // reviewMessage          - When a user submits a review succefully this is used to update the view showing a success message 
+    // reviewLoading          - This is used to show that a review is in the process of being submitted 
+    const [loading, setLoading]                = useState(true);
+    const [movie, setMovie]                    = useState('');
+    const [error, setError]                    = useState("");
+    const [headline,setHeadline]               = useState("");
+    const [score, setScore]                    = useState(0);
+    const [comments, setComments]              = useState("");
+    const [reviewError,setReviewError]         = useState("");
+    const [reviewMessage,setReviewMessage]     = useState("");
+    const [reviewLoading,setReviewLoading]     = useState(false);
 
     /// Redux ///
     // Description:
-    //  Redux manages the global state, need to use that state for "user" in this component 
-    // Get the user state using useSelector
-    // state here is the entire redux state, we only want the user state 
+    //  Redux manages the global state, need to use that state for "user" and "userMovieList"
+    //  user as we need to see if a user is logged in or not 
+    //  state here is the entire redux state, we only want the user state 
     // user - will be object with attributes of loading, error and userInfo
-    const user = useSelector((state) => state.user)
+    const user = useSelector((state) => state.user);
     // Get the userInfo piece of state, dont need loading and error 
     const {userInfo} = user;    
-    
-    
-    
+
     // id         - This is passed as a url param as it is a dynamic route 
     // scoreOutOf - This is used in the form for subbmitting a review, movies are scored out of 10, need 11 for looping through
     const {id} = useParams();
     const scoreOutOf = 11;
 
-    /// handleSubmit ///
+    /// handleReviewSubmit ///
     // Description:
     //  This function handles the submission of form to create a review
     // Inputs:
     //  event - The button event, 
-    const handleSubmit = async(event) =>{
+    const handleReviewSubmit = async(event) =>{
       try{
         event.preventDefault();
         // Reset the message states 
@@ -104,7 +106,7 @@ function MovieScreen() {
               }
         };
         // Send the request 
-        const res = await axios(requestConfig);
+        await axios(requestConfig);
         setReviewMessage("Review succesfully posted!");
         setReviewLoading(false); 
         }
@@ -141,7 +143,7 @@ function MovieScreen() {
                 }
             // Send the request with axios, will return users details 
             const res = await axios(movieRequest);
-            // Set the state for the movies and loading to false 
+             // Set the state for the movies and loading to false 
             setMovie(res.data);
             setLoading(false);
           }catch(error){
@@ -154,7 +156,7 @@ function MovieScreen() {
         }
         // Call get movies 
         getMovie();
-  },[])
+  },[id])
 
     /// return ///
     // Loading = True -> Return LoadingSpinner
@@ -170,12 +172,23 @@ function MovieScreen() {
                 </Col>
             </Row> 
             <Row>
+              <Col>
                 <p>{movie.description}</p>
+              </Col> 
             </Row>
+            {userInfo && 
+            <Row className="pb-3"> 
+              <Col>
+                <AddDeleteMyMovie movieId={id}/>
+              </Col>
+            </Row>
+            }
+            <Row>
             <Col>
                 <h2>Details</h2>
                 <MovieDetails movie={movie} />
             </Col>
+            </Row>
             <h2>Reviews</h2>
             {userInfo ?
             (<Row className="pb-4">
@@ -186,7 +199,7 @@ function MovieScreen() {
                  {reviewLoading && <LoadingSpinner/>}
                   <Card.Body> 
                     <Card.Title>Create a review</Card.Title>
-                    <Form onSubmit={handleSubmit} className="pb-4">
+                    <Form onSubmit={handleReviewSubmit} className="pb-4">
                       <Form.Group>
                         <Form.Label>Headline</Form.Label>
                         <Form.Control onChange= {(event) => setHeadline(event.target.value)} type="text" placeholder="Great Movie" />
@@ -254,7 +267,6 @@ function MovieScreen() {
                 </Card.Body>
             </Card>
               }
-               
               </Col>
             </Row>
       </Container>

@@ -6,7 +6,7 @@
 // Container - Used to structure component 
 // Row       - Container divided up into rows 
 // Col       - Each row can have multiple columns  
-import { Container,Row,Col,Card, ListGroup, ListGroupItem} from "react-bootstrap";
+import {Row,Col,ListGroup} from "react-bootstrap";
 
 /// MovieDetails ///
 // Description:

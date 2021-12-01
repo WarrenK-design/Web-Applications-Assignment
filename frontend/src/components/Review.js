@@ -70,7 +70,7 @@ function Review({movieId,review}){
               }
             };
             // Send the request using axios 
-            const res = await axios(requestConfig);
+            await axios(requestConfig);
             setReviewMessage("The review has been deleted");
             setLoading(false);
         }catch(error){
@@ -107,7 +107,7 @@ function Review({movieId,review}){
                     <Card.Text>
                         {review.comments}
                     </Card.Text>
-                    {userInfo && review.reviewer._id == userInfo.id && 
+                    {userInfo && review.reviewer._id === userInfo.id && 
                     <Button
                         value={review.reviewer._id}
                         variant="danger"

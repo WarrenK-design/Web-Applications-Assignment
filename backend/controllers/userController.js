@@ -23,7 +23,7 @@ async function authUser(req,res,next) {
         // Get the email and password sent in the body 
         let {email, password} = req.body;
         // Find the user 
-        let user = await User.findOne({email})
+        let user = await User.findOne({email}).populate('myMovies.movie')
         // Check if user is null, if it is pass error to middleware  
         if (user === null){
             // No user found for this email 
@@ -42,6 +42,7 @@ async function authUser(req,res,next) {
                 secondName: user.secondName,
                 email: user.email,
                 isAdmin: user.isAdmin,
+                myMovies: user.myMovies,
                 jwt: genJWT(user._id) 
             })
         }else{ 
@@ -197,7 +198,7 @@ async function postMyMovies(req,res,next){
             if(movieExists){
                 // Movie already in the myMovies collection, 409 => Conflict 
                 res.status(409);
-                res.errormessage = "This movie already exists within yout movie collection";
+                res.errormessage = "This movie already exists within your movie collection";
                 return next(new Error('The movie Id sent already has an entry within the users my movie section'));
             }else{
                 // Create document to be added to myMovies 
@@ -205,8 +206,9 @@ async function postMyMovies(req,res,next){
                 // Push the new review to the Model
                 await user.myMovies.push(newMovie);
                 let updatedUser = await user.save();
-                // Return the updated movie with the new review
-                res.json(updatedUser);
+                // Will not populate on save if want populated movies need another db call 
+                const updatedMovies =  await User.findById(req.user._id).select('myMovies').populate('myMovies.movie');;
+                res.json(updatedMovies);
             }
         }else{
             // Bad data has been sent 
@@ -222,7 +224,7 @@ async function postMyMovies(req,res,next){
     }
 }
 
-/// postMyMovies ///
+/// deleteMyMovies ///
 // Description:
 //  This function deletes a movie from the mymovies section identified by movie id sent in body 
 // Route:
@@ -252,8 +254,10 @@ async function deleteMyMovies(req,res,next){
             if(objId){
                 // Pull the movie from the myMovies array using the objId, save the user and return result 
                 await user.myMovies.pull(objId);
-                let updatedUser = await user.save();
-                res.json(updatedUser);
+                await user.save();
+                // Will not populate on save if want populated movies need another db call 
+                const updatedMovies =  await User.findById(req.user._id).select('myMovies').populate('myMovies.movie');;
+                res.json(updatedMovies);
             }else{
                 // No movie with that id has been found 
                 res.status(404);

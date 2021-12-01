@@ -14,7 +14,8 @@
 // axios - Used to make http calls to the backend 
 import {
   USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT, // login and logout functions 
-  USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL // regUser functions
+  USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL, // regUser functions
+  USER_MOVIE_LIST_UPDATE_REQUEST,USER_MOVIE_LIST_UPDATE_SUCCESS,USER_MOVIE_LIST_UPDATE_FAIL // updateMovieList
 }
 from '../constants/userActionConstants';
 import axios from 'axios';
@@ -108,6 +109,56 @@ export function regUser(email,firstName,secondName,password){
       // Set the payload to the user frienly error message from the API 
         dispatch({
             type:USER_REGISTER_FAIL,
+            payload:error.response.data.errormessage})
+    }
+  }
+}
+
+
+/// updateMovieList ///
+// Description:
+//  This function is used to update a movie list for a user
+//  this means either deleting or adding a movie to the user movie list 
+// Inputs:
+//  method      - Will either be DELETE (for deleting a movie) or POST (for adding a movie) 
+//  movieId     - The movie to be added or deleted 
+export function updateMovieList(method,movieId){
+  // Return a async function so we can make async calls, middle ware will pick this up 
+  // Calling a protecte route, need to get the state of current logged in user so pass get state too 
+  return async (dispatch,getState) => {
+    try{
+      // First initiate the request, will set loading to true
+      dispatch({type:USER_MOVIE_LIST_UPDATE_REQUEST})
+      // Need to get the current logged in user as this is a protected route 
+      let {user: {userInfo}} = getState()      
+
+
+      // Set the http request configuration 
+      let requestConfig = {
+            method: method,
+            url: '/user/mymovies',
+            data: {
+                movieId: movieId,
+      },
+       headers: {
+              authorization: `Bearer ${userInfo.jwt}`
+            }
+    }
+      // Send the request with axios, will return users details 
+      const {data} = await axios(requestConfig);
+      // Set the new attribute, not updated in global state here 
+      userInfo.myMovies = data.myMovies;
+      // Dispatch the user register success, will set register loading false 
+      dispatch({type:USER_MOVIE_LIST_UPDATE_SUCCESS});
+      // Now dispatch the login success action and pass the users details in the payload, this will set user state so we can access movies 
+      dispatch({type:USER_LOGIN_SUCCESS,payload:userInfo})
+      // Set the data to local storage
+      localStorage.setItem('userInfo',JSON.stringify(userInfo))
+    }catch(error){
+        console.log(error)
+        // Set the payload to the user frienly error message from the API 
+        dispatch({
+            type:USER_MOVIE_LIST_UPDATE_FAIL,
             payload:error.response.data.errormessage})
     }
   }

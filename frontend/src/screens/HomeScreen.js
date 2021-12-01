@@ -86,7 +86,7 @@ function HomeScreen() {
       <h1>Movies</h1>
       {loading ? <LoadingSpinner/> : error ? <MessageAlert variant="danger">{error}</MessageAlert>:
       <Container>
-        <Row  md={4} xs={2}>
+        <Row  md={4} xs={1}>
         {movies.map((movie) =>(
           <Col className="py-2" key={movie._id}>
             <MovieCard movie={movie}/>

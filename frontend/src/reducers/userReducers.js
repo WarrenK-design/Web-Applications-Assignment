@@ -10,7 +10,8 @@
 // user_action_constants - These are constants defined in ../constants/userActionConstants which are used to test action.type 
 import {
     USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT, // -> used in userLoginReducer
-    USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL    // -> used in userRegisterReducer
+    USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,    // -> used in userRegisterReducer
+    USER_MOVIE_LIST_UPDATE_REQUEST,USER_MOVIE_LIST_UPDATE_SUCCESS,USER_MOVIE_LIST_UPDATE_FAIL
 }
 from '../constants/userActionConstants';
 
@@ -65,6 +66,32 @@ export function userRegisterReducer (state ={}, action) {
         case USER_REGISTER_FAIL:
             // set the error message which will be in patload
             return {loading:false, error: action.payload};
+        // For the default just return the unmodified state, is this is entered then action hasnt been dipatched correctly
+        default:
+            return state;
+        } 
+}
+
+
+// userMovieListReducer //
+// Description:
+//  This is the reducer for updating the user global state when a user wants to alter 
+//  the movies within there list 
+export function userMovieListReducer (state ={}, action) {
+    // Check the action type
+    switch (action.type) {
+        // User has made a request to register 
+        case USER_MOVIE_LIST_UPDATE_REQUEST:
+            // Set loading true -> request being carried out 
+            return {movieListLoading: true};
+        // User has succefully registered 
+        case USER_MOVIE_LIST_UPDATE_SUCCESS:
+            // We have the users details now 
+            return {movieListLoading: false,movieListMessage:"Movie List has been succesfully updated"};
+        // User register has failed 
+        case USER_MOVIE_LIST_UPDATE_FAIL:
+            // set the error message which will be in patload
+            return {movieListLoading:false, movieListError: action.payload};
         // For the default just return the unmodified state, is this is entered then action hasnt been dipatched correctly
         default:
             return state;
