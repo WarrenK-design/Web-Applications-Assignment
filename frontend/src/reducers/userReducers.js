@@ -11,7 +11,8 @@
 import {
     USER_LOGIN_REQUEST,USER_LOGIN_SUCCESS,USER_LOGIN_FAIL,USER_LOGOUT, // -> used in userLoginReducer
     USER_REGISTER_REQUEST,USER_REGISTER_SUCCESS,USER_REGISTER_FAIL,    // -> used in userRegisterReducer
-    USER_MOVIE_LIST_UPDATE_REQUEST,USER_MOVIE_LIST_UPDATE_SUCCESS,USER_MOVIE_LIST_UPDATE_FAIL
+    USER_MOVIE_LIST_UPDATE_REQUEST,USER_MOVIE_LIST_UPDATE_SUCCESS,USER_MOVIE_LIST_UPDATE_FAIL, // used in userMovieListReducer
+    USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL,USER_UPDATE_RESET // used in userUpdateReducer
 }
 from '../constants/userActionConstants';
 
@@ -80,18 +81,49 @@ export function userRegisterReducer (state ={}, action) {
 export function userMovieListReducer (state ={}, action) {
     // Check the action type
     switch (action.type) {
-        // User has made a request to register 
+        // User has made a request to add/delete movie
         case USER_MOVIE_LIST_UPDATE_REQUEST:
             // Set loading true -> request being carried out 
             return {movieListLoading: true};
-        // User has succefully registered 
+        // User has succefully added/deleted movie
         case USER_MOVIE_LIST_UPDATE_SUCCESS:
-            // We have the users details now 
+            // We have the users details now -> updated in login reducer userInfo 
             return {movieListLoading: false,movieListMessage:"Movie List has been succesfully updated"};
-        // User register has failed 
+        // User add/delete movie request has failed 
         case USER_MOVIE_LIST_UPDATE_FAIL:
             // set the error message which will be in patload
             return {movieListLoading:false, movieListError: action.payload};
+        // For the default just return the unmodified state, is this is entered then action hasnt been dipatched correctly
+        default:
+            return state;
+        } 
+}
+
+
+// userUpdateReducer //
+// Description:
+//  This is the reducer for when a user wants to update their details
+//  A PUT request is sent to the backend, the state monitors the success and failure
+//  The result is then saved in the userInfo state as part of the user state using the loginReducer
+export function userUpdateReducer (state ={}, action) {
+    // Check the action type
+    switch (action.type) {
+        // User has made a request to update details 
+        case USER_UPDATE_REQUEST:
+            // Set loading true -> request being carried out 
+            return {userUpdateLoading:true};
+        // User has succefully updated details 
+        case USER_UPDATE_SUCCESS:
+            // We have the users details now -> We update state through login reducer 
+            return {userUpdateLoading: false,userUpdateSuccess:true};
+        // User update has failed
+        case USER_UPDATE_FAIL:
+            // set the error message which will be in payload
+            return {userUpdateLoading:false, userUpdateError: action.payload,userUpdateSuccess:false};
+        // The messages persist between naviagtion of pages, reset them here so old messages arent displayed multiple times 
+        // this is called in the useEffect to start with fresh messages on the page load 
+        case USER_UPDATE_RESET:
+            return {};
         // For the default just return the unmodified state, is this is entered then action hasnt been dipatched correctly
         default:
             return state;

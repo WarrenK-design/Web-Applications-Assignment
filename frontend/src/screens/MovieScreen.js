@@ -60,7 +60,7 @@ function MovieScreen() {
 
     /// Redux ///
     // Description:
-    //  Redux manages the global state, need to use that state for "user" and "userMovieList"
+    //  Redux manages the global state, need to use that state for "user"
     //  user as we need to see if a user is logged in or not 
     //  state here is the entire redux state, we only want the user state 
     // user - will be object with attributes of loading, error and userInfo

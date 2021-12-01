@@ -22,11 +22,13 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 //  userLoginReducer     - Reducer for setting the state of logged in users information 
 //  userRegisterReducer  - Reducer used in handling registertraion of the user 
 //  userMovieListReducer - Used when adding/deleting movies from the list 
-import { userLoginReducer, userRegisterReducer,userMovieListReducer } from './reducers/userReducers'; 
+//  userUpdateReducer    - Used when a user wants to update there details, will store error and success message from PUT /user/profile
+import { userLoginReducer, userRegisterReducer,userMovieListReducer,userUpdateReducer } from './reducers/userReducers'; 
 const reducer = combineReducers({
     user: userLoginReducer,
     userRegistration: userRegisterReducer,
-    userMovieList:userMovieListReducer
+    userMovieList:userMovieListReducer,
+    userUpdate: userUpdateReducer
 })
 
 /// Initial State -> Persisting between sessions ///

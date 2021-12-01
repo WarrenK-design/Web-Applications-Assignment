@@ -18,6 +18,7 @@ import LoadingSpinner from "../components/Widgets/LoadingSpinner";
 import MessageAlert from "../components/Widgets/MessageAlert";
 import MovieCard from "../components/Movie/MovieCard";
 import ProfilePicture from '../components/Profile/ProfilePicture';
+import EditProfile from '../components/Profile/EditProfile';
 
 /// Bootstrap ///
 // Container - Used to structure component 
@@ -83,6 +84,11 @@ function ProfileScreen() {
       <Row>
         <Col className="text-center">
           <h1>{userInfo.firstName} {userInfo.secondName}</h1>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col>
+          <EditProfile/>
         </Col>
       </Row>
         <Card>

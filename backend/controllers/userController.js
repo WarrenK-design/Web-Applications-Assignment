@@ -134,10 +134,18 @@ async function putProfile(req,res,next) {
             return next(new Error("The requested updte of the users profile could not be completed as no user was found relating to the user id"));
         }
     }catch(error){
-        // If this block is reached then there is a server error 
-        console.error(error);
-        res.errormessage = "Could not update users profile at this time, sorry try again later"
-        next(error);
+        console.log(error);
+        // Check if it is a duplicate key error, means user is trying to update email to one which already exists 
+        if(error.name === 'MongoServerError' && error.code ===11000){
+            // Email already has an entry, 409 conflict 
+            res.status(409);
+            res.errormessage = "A user with this email already exists within the system";
+            next(error);
+        }else{
+            // If this block is reached then there is a server error 
+            res.errormessage = "Could not update users profile at this time, sorry try again later"
+            next(error);
+        }
     }
 }
 
@@ -205,8 +213,6 @@ async function getProfileImage(req,res,next) {
         // Check if there is a profileImage associated with this user 
         if (userProfileRef.profileImage){
             let imagePath = `${__dirname}/uploads/profileImages/${userProfileRef.profileImage}`;
-            console.log("USER")
-            console.log(imagePath);
             res.sendFile(imagePath) 
         }else{
             // No profile image associated with this user 
