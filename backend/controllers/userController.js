@@ -89,6 +89,60 @@ async function getProfile(req,res,next) {
 }
 
 
+/// putProfile ///
+// Description:
+//  This function is used to update the users profile 
+// Route:
+//  PUT /user/profile
+// Access Control:
+//  Private Route 
+async function putProfile(req,res,next) {
+    try{
+        // Get the user using the req.user infor 
+        let user = await User.findById(req.user._id)
+        // Check there is a user 
+        if(user){
+            // In the body of the request will be the  updates for each field 
+            // Check if these parameters exists, if they dont leave them as they where 
+            user.firstName  = req.body.firstName || user.firstName;
+            user.secondName = req.body.secondName || user.secondName;
+            user.email      = req.body.email     || user.email;
+            // Check if a password was sent, need a check as there is no point in rehasing if it hasnt been sent 
+            // Even if it hasnt been changed, when you assign it same value it will cause hashing to run again hashing 
+            // the previously stored value again which is needless 
+            if(req.body.password){
+                user.password = req.body.password || user.password;
+            };
+            // Save the user, on save will call the middle ware to hash password if it has changed 
+            await user.save()
+            // user.save() will not populate movies, we want movies populated for frontend, get them 
+            let updatedUser = await User.findById(req.user._id).populate('myMovies.movie')
+            // Return user attributes and gen JWT 
+            res.json({
+                id: updatedUser._id,
+                firstName: updatedUser.firstName,
+                secondName: updatedUser.secondName,
+                email: updatedUser.email,
+                isAdmin: updatedUser.isAdmin,
+                myMovies: updatedUser.myMovies,
+                jwt: genJWT(updatedUser._id) 
+            })
+        }else{
+            // No user found, 404 no data found 
+            res.status(404);
+            res.errormessage = "No reference to the user in the system";
+            return next(new Error("The requested updte of the users profile could not be completed as no user was found relating to the user id"));
+        }
+    }catch(error){
+        // If this block is reached then there is a server error 
+        console.error(error);
+        res.errormessage = "Could not update users profile at this time, sorry try again later"
+        next(error);
+    }
+}
+
+
+
 /// regUser ///
 // Description:
 //  This function is used to register a new user 
@@ -170,6 +224,9 @@ async function getProfileImage(req,res,next) {
         next(error);
     }
 }
+
+
+
 
 /// postMyMovies ///
 // Description:
@@ -280,4 +337,4 @@ async function deleteMyMovies(req,res,next){
     }
 }
 
-export {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies};
+export {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies,putProfile};
