@@ -14,9 +14,9 @@ import {useNavigate,Link } from "react-router-dom";
 // ForContainer   - Component to wrap forms in so they look the same through out application 
 // LoadingSpinner - Component to show a spinner when data is loading  
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
-import FormContainer from "../components/FormContainer";
-import LoadingSpinner from "../components/LoadingSpinner";
-import MessageAlert from "../components/MessageAlert";
+import FormContainer from "../components/Layout/FormContainer";
+import LoadingSpinner from "../components/Widgets/LoadingSpinner";
+import MessageAlert from "../components/Widgets/MessageAlert";
 
 // Bootsrap //
 // Form    - See https://react-bootstrap.github.io/components/forms/

@@ -16,11 +16,11 @@ import axios from 'axios';
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
 // MovieDetails   - Component to display the movie details 
 // Reviews        - Component used to hold a review 
-import LoadingSpinner from "../components/LoadingSpinner";
-import MessageAlert from "../components/MessageAlert";
-import MovieDetails from '../components/MovieDetails';
-import Review      from '../components/Review';
-import AddDeleteMyMovie from '../components/AddDeleteMyMovie';
+import LoadingSpinner from "../components/Widgets/LoadingSpinner";
+import MessageAlert from "../components/Widgets/MessageAlert";
+import MovieDetails from '../components/Movie/MovieDetails';
+import Review      from '../components/Movie/Review';
+import AddDeleteMyMovie from '../components/Movie/AddDeleteMyMovie';
 
 /// Bootstrap ///
 // Container - Used to structure component 

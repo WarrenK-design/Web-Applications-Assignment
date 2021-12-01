@@ -15,8 +15,8 @@ import {Card,Button} from "react-bootstrap";
 // Components //
 // LoadingSpinner - Component to show a spinner when data is loading  
 // MessageAlert   - This component is used to display messages to the user
-import LoadingSpinner from "./LoadingSpinner";
-import MessageAlert from "./MessageAlert";
+import LoadingSpinner from "../Widgets/LoadingSpinner";
+import MessageAlert from "../Widgets/MessageAlert";
 
 
 

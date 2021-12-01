@@ -12,11 +12,8 @@ import {useState,useEffect} from 'react';
 // Components //
 // LoadingSpinner - Component to show a spinner when data is loading  
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
-// MovieDetails   - Component to display the movie details 
-// Reviews        - Component used to hold a review 
-import LoadingSpinner from "../components/LoadingSpinner";
-import MessageAlert from "../components/MessageAlert";
-import MovieDetails from '../components/MovieDetails';
+import LoadingSpinner from "../Widgets/LoadingSpinner";
+import MessageAlert from "../Widgets/MessageAlert";
 
 // Bootstrap ///
 import {Button} from "react-bootstrap";
@@ -26,7 +23,7 @@ import {Button} from "react-bootstrap";
 // useSelector     - Used to get the redux global state  https://react-redux.js.org/api/hooks
 // updateMovieList - This action is used to update the movie list adding/deleting movies 
 import {useSelector,useDispatch} from 'react-redux';
-import {updateMovieList} from '../actions/userActions';
+import {updateMovieList} from '../../actions/userActions';
 
 
 // Props:

@@ -151,6 +151,8 @@ async function getProfileImage(req,res,next) {
         // Check if there is a profileImage associated with this user 
         if (userProfileRef.profileImage){
             let imagePath = `${__dirname}/uploads/profileImages/${userProfileRef.profileImage}`;
+            console.log("USER")
+            console.log(imagePath);
             res.sendFile(imagePath) 
         }else{
             // No profile image associated with this user 

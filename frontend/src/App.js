@@ -23,8 +23,8 @@ import NoMatchScreen from './screens/NoMatchScreen';
 import MovieScreen from './screens/MovieScreen';
 
 /// Components ///
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/Layout/Header';
+import Footer from './components/Layout/Footer';
 
 /// App ///
 // Description:

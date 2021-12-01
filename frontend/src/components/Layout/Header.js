@@ -15,7 +15,7 @@ import {Container,Navbar,Nav,NavDropdown} from 'react-bootstrap';
 // useSelector - Used to get the redux global state  https://react-redux.js.org/api/hooks
 // logout - Function to use for the logout button 
 import {useDispatch,useSelector} from 'react-redux';
-import {logout} from '../actions/userActions';
+import {logout} from '../../actions/userActions';
 
 /// Header ///
 // Header is displayed on every page, 

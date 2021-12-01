@@ -17,9 +17,9 @@ function errorHandler(err,req,res,next){
     // Check for incorrect file format message on profile picture, 
     // this is caught by external library but we want a 422 error not 500 
     if(err.message === "Profile picture format incorrect, jpg, gpeg or png only accepted"){
+        res.errormessage = "Profile picture format incorrect, jpg, gpeg or png only accepted";
         statusCode = 422;
-    }
-    else if(res.statusCode === 200){///Sometimes you get a 200 even though you shouldnt
+    }else if(res.statusCode === 200){///Sometimes you get a 200 even though you shouldnt
         statusCode = 500;
     }else{ // Correct status code must have been set in the route 
         statusCode = res.statusCode;

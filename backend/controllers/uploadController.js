@@ -7,6 +7,10 @@
 // path   - Used for getting file extension on upload
 import User from '../models/userModel.js';
 import path from 'path';
+import { copyFileSync } from 'fs';
+
+// Set the __dirname, using modules syntax so not available by efault 
+const __dirname = path.resolve(); 
 
 /// postProfileImage ///
 // Description:
@@ -27,7 +31,7 @@ async function postProfileImage(req,res,next) {
             let filter = {_id: req.user._id};
             let update = {profileImage: `profileImage-${req.user._id}${path.extname(req.file.originalname)}`}
             let existingUser = await User.findOneAndUpdate(filter, update,{new: true});
-            // Return and refrence to location of new file, this is not the actual file returned 
+            //Return and refrence to location of new file, this is not the actual file returned 
             res.status(200).json({_id:existingUser._id,profileImage:existingUser.profileImage});
         }else{
             // No need to update the reference, the photo in the file has been overwrited, same name

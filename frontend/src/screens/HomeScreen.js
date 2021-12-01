@@ -14,9 +14,9 @@ import axios from 'axios';
 // LoadingSpinner - Component to show a spinner when data is loading  
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
 // MovieCard      - This component is to display an individula movie
-import LoadingSpinner from "../components/LoadingSpinner";
-import MessageAlert from "../components/MessageAlert";
-import MovieCard from '../components/MovieCard';
+import LoadingSpinner from "../components/Widgets/LoadingSpinner";
+import MessageAlert from "../components/Widgets/MessageAlert";
+import MovieCard from '../components/Movie/MovieCard';
 
 /// Bootstrap ///
 // Container - Used to structure component 
