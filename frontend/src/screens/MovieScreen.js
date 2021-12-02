@@ -16,11 +16,13 @@ import axios from 'axios';
 // MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
 // MovieDetails   - Component to display the movie details 
 // Reviews        - Component used to hold a review 
+// AddReview      - Component for creating a review 
 import LoadingSpinner from "../components/Widgets/LoadingSpinner";
 import MessageAlert from "../components/Widgets/MessageAlert";
 import MovieDetails from '../components/Movie/MovieDetails';
 import Review      from '../components/Movie/Review';
 import AddDeleteMyMovie from '../components/Movie/AddDeleteMyMovie';
+import AddReview from '../components/Movie/AddReview';
 
 /// Bootstrap ///
 // Container - Used to structure component 
@@ -42,21 +44,9 @@ function MovieScreen() {
     // loading                - This is to first wait untill all the relevant information has been retrieved from backend
     // movie                  - This is to hold the movie returned from the API 
     // error                  - If there is an error returned from the API call to get the movie need to set it so is displayed 
-    // headline               - headline user supplies for a movie review 
-    // score                  - This is the score the user gives when reviewing the movie 
-    // comments               - The comments a user supplies with there review 
-    // reviewError            - When a user submits a review if there is an error this is set 
-    // reviewMessage          - When a user submits a review succefully this is used to update the view showing a success message 
-    // reviewLoading          - This is used to show that a review is in the process of being submitted 
     const [loading, setLoading]                = useState(true);
     const [movie, setMovie]                    = useState('');
     const [error, setError]                    = useState("");
-    const [headline,setHeadline]               = useState("");
-    const [score, setScore]                    = useState(0);
-    const [comments, setComments]              = useState("");
-    const [reviewError,setReviewError]         = useState("");
-    const [reviewMessage,setReviewMessage]     = useState("");
-    const [reviewLoading,setReviewLoading]     = useState(false);
 
     /// Redux ///
     // Description:
@@ -69,61 +59,8 @@ function MovieScreen() {
     const {userInfo} = user;    
 
     // id         - This is passed as a url param as it is a dynamic route 
-    // scoreOutOf - This is used in the form for subbmitting a review, movies are scored out of 10, need 11 for looping through
     const {id} = useParams();
-    const scoreOutOf = 11;
-
-    /// handleReviewSubmit ///
-    // Description:
-    //  This function handles the submission of form to create a review
-    // Inputs:
-    //  event - The button event, 
-    const handleReviewSubmit = async(event) =>{
-      try{
-        event.preventDefault();
-        // Reset the message states 
-        setReviewMessage("");
-        setReviewError("");
-        setReviewLoading(true);
-        // Check that the user has filled out headline and comment 
-        if(headline ==='' && comments ===''){
-          console.log(headline,comments)
-          setReviewError("All fields must be filled out");
-          setReviewLoading(false);
-        }else{
-          // Set the http request configuration 
-          // Convert score to a string as check on backend checks as string 
-          let requestConfig = {
-            method: 'post',
-            url: `/movies/reviews/${id}`,
-            data: {
-              headline:headline,
-              comments:comments,
-              score: score.toString()
-            },
-            headers: {
-                  authorization: `Bearer ${userInfo.jwt}`
-              }
-        };
-        // Send the request 
-        await axios(requestConfig);
-        setReviewMessage("Review succesfully posted!");
-        setReviewLoading(false); 
-        }
-    }catch(error){
-      // The API if running will always send back this message 
-      if(error.response.data.errormessage){
-        setReviewError(error.response.data.errormessage);
-      }else{
-        // If api connection problem set this 
-        setReviewError("Review could not be processed at this time");
-      }
-      // No longer loading review
-      setReviewLoading(false);  
-    } 
-  }
-
-
+    
     /// useEffect ///
     // Description:
     //  This makes the API call to get the movie a t /movies/:id
@@ -190,68 +127,24 @@ function MovieScreen() {
             </Col>
             </Row>
             <h2>Reviews</h2>
-            {userInfo ?
-            (<Row className="pb-4">
-              <Col>
-                <Card className="pb-4"> 
-                 {reviewError && <MessageAlert variant='danger'>{reviewError}</MessageAlert>}  
-                 {reviewMessage && <MessageAlert variant='success'>{reviewMessage}</MessageAlert>} 
-                 {reviewLoading && <LoadingSpinner/>}
-                  <Card.Body> 
-                    <Card.Title>Create a review</Card.Title>
-                    <Form onSubmit={handleReviewSubmit} className="pb-4">
-                      <Form.Group>
-                        <Form.Label>Headline</Form.Label>
-                        <Form.Control onChange= {(event) => setHeadline(event.target.value)} type="text" placeholder="Great Movie" />
-                        <Form.Text>Few words summing up the review</Form.Text>
-                      </Form.Group>
-                    <Form.Label>Score</Form.Label>
-                    <Dropdown>
-                      <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                        {score}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {[...Array(scoreOutOf)].map((e,i) => 
-                            <Dropdown.Item
-                              key={i}
-                              id={`toggle-review-score-${i}`}
-                              type="checkbox"
-                              value={i}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setScore(i)}
-                              }
-                            > 
-                              {i}                            
-                            </Dropdown.Item>
-                          )}
-                      </Dropdown.Menu>
-                  </Dropdown>
-                  <Form.Group>
-                    <Form.Label>Comments</Form.Label>
-                    <Form.Control onChange= {(event) => setComments(event.target.value)} as="textarea" placeholder="The movie was thrilling from beginning to end!" />
-                    <Form.Text>Give us your taughts on the film</Form.Text>
-                  </Form.Group>
-                  <Button className="mt-3" variant="primary" type="submit">
-                    Submit
-                  </Button>
-                </Form>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
+            {userInfo ? (
+              <Row>
+                <Col className='pb-4'>
+                  <AddReview movieId={id}/>
+                </Col>
+              </Row>
             )
             :      
-            <Row>
-              <Col className='text-center pb-2'>
-                <h5>
-                Want to review {movie.original_title}?  
-                <Link className='px-1' to='/login'>Sign In</Link>
-                or<Link className='px-1' to='/login'>Register</Link>
-                today!
-                </h5>
-              </Col>
-            </Row>
+              <Row>
+                <Col className='text-center pb-2'>
+                  <h5>
+                  Want to review {movie.original_title}?  
+                  <Link className='px-1' to='/login'>Sign In</Link>
+                  or<Link className='px-1' to='/login'>Register</Link>
+                  today!
+                  </h5>
+                </Col>
+              </Row>
             }
             <Row>
               <Col>
@@ -274,5 +167,4 @@ function MovieScreen() {
       </> 
 );
 }
- //<Reviews movieId={movie._id} reviews={movie.reviews}/>
 export default MovieScreen;
