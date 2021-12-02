@@ -8,7 +8,9 @@ import Movie from '../models/movieModel.js';
 
 /// Get /movies ///
 // Description:
-//  Route to return the movies from the database 
+//  Route to return the movies from the database
+//  A pageNumber param is expected to be passed to it, 20 results per page
+//  Addiotonally if category and keyword are passed, results returened will be based on this
 // Access Control:
 //  Public Route
 async function getMovies(req,res,next){
@@ -16,8 +18,57 @@ async function getMovies(req,res,next){
         // There is a limit of 20 movies per page 
         const limitPerPage = 20;
         const pageNumber   = req.params.pageNumber;
-        const movies = await Movie.find({}).limit(limitPerPage).skip(limitPerPage*pageNumber);
+        // Check if there is a category and keyword search 
+        const keyword  = req.query.keyword;
+        const category = req.query.category; 
+        // If keyword and category are undefined return all movies 
+        if(keyword == 'undefined' && category == 'undefined'){
+            const movies = await Movie.find({}).limit(limitPerPage).skip(limitPerPage*pageNumber);
+            res.json(movies);
+        }else{
+            // The pattern will hold how the matching takes place
+            // Sort will hold if there is a particular order 
+            let pattern = "";
+            let sort    = ""
+            // YEAR
+            if(category === "year"){
+                console.log("YEAR")
+                // Want an exact match on the year 
+                pattern = {
+                    year:{
+                        $eq: keyword
+                    }
+                }
+            }
+            // DURATION
+            else if(category === "duration"){
+                // Get movies less than or equal to specified duration 
+                pattern = {
+                    duration:{
+                        $lte: keyword
+                    }
+                }
+                // Sort the movies descending 
+                sort = {'duration': -1}
+            }
+            // GENERAL KEYWORD
+            else{
+                // Use the mongo regex feature to search within a specific category 
+                // to search for a specific keyword in that category https://docs.mongodb.com/manual/reference/operator/query/regex/
+                // pass options i to disregard case 
+                pattern = {
+                    [`${category}`]: 
+                    {
+                        $regex: keyword,
+                        $options: 'i'
+                    }
+                }        
+        }
+        // Make the request to get the movies using the patterns and sort filters specified, only return 20 results per page  
+        const movies = await Movie.find({...pattern}).sort({...sort}).limit(limitPerPage).skip(limitPerPage*pageNumber);
         res.json(movies);
+        }
+        
     }catch(error){
          // If this block is reached then there is a server error 
         console.error(error);

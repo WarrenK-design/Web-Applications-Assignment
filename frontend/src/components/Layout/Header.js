@@ -6,8 +6,13 @@
 //        by default it behaves like a ahref which will cause a rerender of components in react 
 import {Link} from 'react-router-dom';
 
+// Components //
+//  SearchBar - The searchbar component 
+import SearchBar from '../Widgets/SearchBar';
+
+
 // Bootstrap //
-import {Container,Navbar,Nav,NavDropdown} from 'react-bootstrap';
+import {Container,Col,Navbar,Nav,NavDropdown} from 'react-bootstrap';
 
 // Redux //
 // Want to show the user is logged in, need the user state from redux to do this 
@@ -43,15 +48,19 @@ function Header() {
     dispatch(logout());
   }
 
-  // JSX //
+  // return //
   // This return uses conitional rendering to show login button if user not logged in 
   // If a user is logged in then it shows username and dropdown menu for profile and logout button 
   // see here for conditional rendering https://reactjs.org/docs/conditional-rendering.html
+  // Also shows the search bar component 
   return (
     <header className="pb-4">
        <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
         <Container>
             <Navbar.Brand as={Link} to="/"><i className="fas fa-video px-1"></i>Movie Reviews</Navbar.Brand>
+            <Col md={6}>
+              <SearchBar/>
+            </Col>
             <Nav>
             {userInfo ?
             (<NavDropdown align="end" title={userInfo.firstName}>

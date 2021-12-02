@@ -5,7 +5,7 @@
 //// Imports ////
 /// Packages 
 // react-router-dom - Allows rendering of components for different urls 
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import {BrowserRouter as Router,Routes,Route,Navigate } from 'react-router-dom';
 
 /// bootsrap ///
 // There is a container within the main body to make is easier for page layouts, 
@@ -19,7 +19,6 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import NoMatchScreen from './screens/NoMatchScreen';
 import MovieScreen from './screens/MovieScreen';
 
 /// Components ///
@@ -37,12 +36,14 @@ function App() {
         <main>
           <Container>
             <Routes>
-              <Route path="/" element={<HomeScreen/>}/>
+              <Route path="/:pageNumber" element={<HomeScreen/>}/>
+              <Route path="/search/:pageNumber/:category/:keyword" element={<HomeScreen/>}/>
               <Route path="/login" element={<LoginScreen/>}/>
               <Route path="/register" element={<RegisterScreen/>}/>
               <Route path="/profile" element={<ProfileScreen/>}/>
               <Route path="/movie/:id" element={<MovieScreen/>}/>
-              <Route path="*" element={<NoMatchScreen/>}/>
+              <Route path="/" element={<Navigate to="/0"/>}/>
+              <Route path="*" element={<Navigate to="/0"/>}/>
             </Routes>
           </Container>
         </main>
