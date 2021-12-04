@@ -3,6 +3,7 @@
 // dotenv       - Used for reading in .env environment variables 
 // mongoConnect - Function used for connecting to the mongodb database 
 // errorHandler - Middleware for displaying custom error messages for api
+// notFoundHandler - Middleware for handling a 404
 // path         - Used for directory handling 
 // cors      - Cross origin domain requests, used to accept request from differetn domain https://expressjs.com/en/resources/middleware/cors.html
 import express from 'express';
@@ -11,7 +12,7 @@ import mongoConnect from './database/connection/db.js';
 import userRoutes from './routes/userRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import movieRoutes from './routes/moviesRoutes.js';
-import {errorHandler} from './middleware/errorMiddleware.js'
+import {errorHandler,notFoundHandler} from './middleware/errorMiddleware.js'
 import path from 'path';
 import cors from 'cors';
 
@@ -44,11 +45,15 @@ app.use('/user',userRoutes);
 app.use('/uploads',uploadRoutes);
 app.use('/movies',movieRoutes);
 
-/// Error MiddleWare ///
-app.use(errorHandler);
-
 // static folder - uploads folder needs to be available in the browser 
 app.use('/uploads',express.static(path.join(__dirname,'/uploads')))
+
+
+/// MiddleWare ///
+//  errorHandler - Used for hanling reposnses to errors 
+//  notFoundHandler - Used for handling 404's
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 //Start the server listening 
 app.listen(PORT,() => console.log(`Server started on port ${PORT}`));

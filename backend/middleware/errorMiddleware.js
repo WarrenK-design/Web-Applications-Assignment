@@ -2,8 +2,6 @@
 //  This file contains any error middleware functions for the server 
 //  These are used to overwrite the default error middleware and send back custom messages 
 
-
-
 /// errorHandler ///
 //  Description:
 //      This function is called to handle errors in the controllers for each route 
@@ -40,4 +38,15 @@ function errorHandler(err,req,res,next){
     }  
 }
 
-export {errorHandler};
+/// notFoundHandler ///
+// Description:
+//  This is used to catch any requests to URL's which do not exit
+//  A status code for an unkown route should be a 404 status code 
+function notFoundHandler(req,res,next){
+    // Set the status code and a message  
+    res.status(404);
+    res.errormessage = "Could not find the requested route";
+    return next(new Error("A request was mad to an unknown URL"));
+}
+
+export {errorHandler,notFoundHandler};
