@@ -86,7 +86,7 @@ function AddReview({movieId}){
           // Convert score to a string as check on backend checks as string 
           let requestConfig = {
             method: 'post',
-            url: `/movies/reviews/${movieId}`,
+            url: `${process.env.REACT_APP_API_URL}/movies/reviews/${movieId}`,
             data: {
               headline:headline,
               comments:comments,

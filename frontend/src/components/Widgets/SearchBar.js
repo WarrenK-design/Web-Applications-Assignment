@@ -92,7 +92,7 @@ function SearchBar() {
                 setInputType("text");
                 setCategory("cast")
             }}>
-            Cast
+            Actor
         </Dropdown.Item>
           <Dropdown.Item 
             onClick = {(e) =>{

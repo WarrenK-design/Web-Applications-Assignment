@@ -73,7 +73,7 @@ function ProfilePicture(){
         // Set the http request configuration 
         let profileImageRequest = {
           method: 'get',
-          url: '/user/profileimage',
+          url: `${process.env.REACT_APP_API_URL}/user/profileimage`,
           responseType: 'arraybuffer',
           headers: {
             authorization: `Bearer ${userInfo.jwt}`
@@ -116,7 +116,7 @@ function ProfilePicture(){
             // Create the request configuration 
             let uploadImageRequest = {
                 method: 'post',
-                url: '/uploads/profileimage',
+                url: `${process.env.REACT_APP_API_URL}/uploads/profileimage`,
                 headers: {
                 authorization: `Bearer ${userInfo.jwt}`
                 },

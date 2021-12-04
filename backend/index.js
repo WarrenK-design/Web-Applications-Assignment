@@ -4,6 +4,7 @@
 // mongoConnect - Function used for connecting to the mongodb database 
 // errorHandler - Middleware for displaying custom error messages for api
 // path         - Used for directory handling 
+// cors      - Cross origin domain requests, used to accept request from differetn domain https://expressjs.com/en/resources/middleware/cors.html
 import express from 'express';
 import dotenv  from 'dotenv';
 import mongoConnect from './database/connection/db.js';
@@ -12,7 +13,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import movieRoutes from './routes/moviesRoutes.js';
 import {errorHandler} from './middleware/errorMiddleware.js'
 import path from 'path';
-
+import cors from 'cors';
 
 /// Setup ///
 // Load the env vars 
@@ -24,9 +25,15 @@ mongoConnect();
 // app       - Express object for running server, adding middleware 
 // PORT      - The port to run the server on, get it from environemnt, no env then 5000 
 // __dirname - Current directory 
+
 const app  = express();
 const PORT = process.env.PORT || 5000; 
 const __dirname = path.resolve();
+
+/// Cors ///
+// Allow reuests from diffeernt sources 
+app.use(cors())
+
 
 /// Middleware ///
 // express.json - This is a body parser for parsing JSON messages 

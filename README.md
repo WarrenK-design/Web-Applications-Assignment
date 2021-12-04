@@ -35,3 +35,72 @@ There is a structure for the react components in the subdirectories.
 1. ***screens*** - These are containers which use smaller components. They are linked to a specific route on the frontend which is specified using the React Router Dom package in the *index.js* file under the *src* directory. For example the *LoginScreen* compoenent is rendered when at the frontend url */login*. 
 2. ***components*** - These are smaller compoenets which are used within the screens. These provide specific functionality and are tried to be designed to be as reusable as possible. The functionality within these components could all be placed within the *Screen* components but breaking up the components into smaller components makes it more manageable and easier to reuse components in different screens. For example the ***HomeScreen*** uses the ***MovieCard*** component to display the movies. The ***ProfileScreen*** has a MyMovies section containing the users favourite movies, the ***MovieCard*** component is reused to display the users favourite movies. 
 
+# Running Application 
+There is some configuration before the application can be run. 
+
+## Node Modules
+The *Node Modules* directory is not included, the package.json file can be used to install the node modules. 
+
+For the frontend execute the following command. 
+```
+cd frontend
+npm install
+```
+For the backend execute the following commands. 
+```
+cd backend
+npm install
+```
+
+## Database 
+There should be a MongoDB instance running on your local machine on port ```27017```. The connection URI is located in ```backend\.env``` if this needs to be changed. 
+
+Execute the following commands to set up the database. 
+
+```
+cd backend
+npm run seedData
+```
+A database named ```WebApplicationsProject``` has been created with two collections ```users``` and ```movies```. Data has been seeded to these collections using the data in ```backend\database\data```.  
+
+***IMPORTANT*** Running ```npm run seedData``` again will reset any data in the database including newly created profiles, MyMovies or any profile changes.
+
+## Backend 
+It assumes that ```5000``` is free to run the API on. The backend application can be run in two modes, *development* or *production*.
+
+### Development mode 
+This mode returns stack traces and a user friendly message with the HTTP response which can be useful for debugging. In the ```backend/.env``` file change the ```NODE_ENV=development```. 
+
+Two scripts can then be used to run the server. The first uses ```nodemon``` which will restart the server if a change is made to any of the files. To run the server in this mode execute the following. 
+```
+cd backend
+npm run dev
+```
+The second does not restart the server if a change is made and does not use ```nodemon``` to run the server. To run using this script execute.
+
+```
+cd backend 
+npm start
+```
+
+### Production Mode 
+This version does not return a stack trace message, only a user friendly message as a stack trace should not be present in production. 
+
+In the ```backend/.env``` file change the ```NODE_ENV=production```. To run the server using the following command. 
+```
+cd backend 
+npm start
+```
+
+## Frontend
+The frontend assumes that port ```3000``` is free on the machine. 
+The frontend calls the backend for data using URL set in the environment variable ```REACT_APP_API_URL``` in the file ```frontend\.env```. This is set to the URL of the backend on port 5000 ```REACT_APP_API_URL=http://localhost:5000```. 
+The backend has CORS enabled and should accept request from the frontend. 
+
+To run the frontend execute the following commands. 
+```
+cd frontend
+npm run start
+```
+
+A web browser should open the home page of the application showing movies fetched from the backend API. 

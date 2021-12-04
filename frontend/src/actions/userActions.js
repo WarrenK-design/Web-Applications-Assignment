@@ -37,7 +37,7 @@ export function login(email, password) {
         // Set the http request configuration 
         let requestConfig = {
             method: 'post',
-            url: '/user/login',
+            url: `${process.env.REACT_APP_API_URL}/user/login`,
             data: {
                 email: email,
                 password: password}
@@ -91,7 +91,7 @@ export function regUser(email,firstName,secondName,password){
       // Set the http request configuration 
       let requestConfig = {
             method: 'post',
-            url: '/user/',
+            url: `${process.env.REACT_APP_API_URL}/user/`,
             data: {
                 email: email,
                 firstName: firstName,
@@ -137,7 +137,7 @@ export function updateMovieList(method,movieId){
       // Set the http request configuration 
       let requestConfig = {
             method: method,
-            url: '/user/mymovies',
+            url: `${process.env.REACT_APP_API_URL}/user/mymovies`,
             data: {
                 movieId: movieId,
       },
@@ -185,7 +185,7 @@ export function updateUser(userUpdate){
       // Set the http request configuration 
       let requestConfig = {
             method: 'put',
-            url: '/user/profile',
+            url: `${process.env.REACT_APP_API_URL}/user/profile`,
             data: userUpdate,
        headers: {
               authorization: `Bearer ${userInfo.jwt}`

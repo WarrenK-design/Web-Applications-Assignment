@@ -32,7 +32,6 @@ async function getMovies(req,res,next){
             let sort    = ""
             // YEAR
             if(category === "year"){
-                console.log("YEAR")
                 // Want an exact match on the year 
                 pattern = {
                     year:{

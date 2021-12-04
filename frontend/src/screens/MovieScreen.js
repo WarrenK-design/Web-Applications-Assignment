@@ -76,7 +76,7 @@ function MovieScreen() {
             // Set the request information using the id 
             let movieRequest = {
                 method: 'get',
-                url: `/movies/byId/${id}`
+                url: `${process.env.REACT_APP_API_URL}/movies/byId/${id}`
                 }
             // Send the request with axios, will return users details 
             const res = await axios(movieRequest);
@@ -140,7 +140,7 @@ function MovieScreen() {
                   <h5>
                   Want to review {movie.original_title}?  
                   <Link className='px-1' to='/login'>Sign In</Link>
-                  or<Link className='px-1' to='/login'>Register</Link>
+                  or<Link className='px-1' to='/register'>Register</Link>
                   today!
                   </h5>
                 </Col>

@@ -61,7 +61,7 @@ function Review({movieId,review}){
             // Buil the request configuration //
             let requestConfig = {
                 method: 'delete',
-                url: `/movies/reviews/${movieId}`,
+                url: `${process.env.REACT_APP_API_URL}/movies/reviews/${movieId}`,
                 data: {
                     reviewId: reviewId
                 },

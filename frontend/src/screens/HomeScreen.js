@@ -67,7 +67,7 @@ function HomeScreen() {
         // Set the request information using the pagenumber 
         let moviesRequest = {
             method: 'get',
-            url: `/movies/${pageNumber}/?category=${category}&keyword=${keyword}`
+            url: `${process.env.REACT_APP_API_URL}/movies/${pageNumber}/?category=${category}&keyword=${keyword}`
             }
         // Send the request with axios, will return users details 
         const res = await axios(moviesRequest);

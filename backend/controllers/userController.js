@@ -180,6 +180,7 @@ async function regUser(req,res,next) {
                 firstName: user.firstName,
                 secondName: user.secondName,
                 email: user.email,
+                myMovies: user.myMovies,
                 isAdmin: user.isAdmin,
                 jwt: genJWT(user._id) 
             });
