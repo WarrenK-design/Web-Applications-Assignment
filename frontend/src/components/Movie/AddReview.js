@@ -6,7 +6,7 @@
 // useState  - Stateful component, https://reactjs.org/docs/hooks-state.html
 // useEffect - After rendered to the DOM executes functionlaity, https://reactjs.org/docs/hooks-effect.html 
 // axios     - Used for sending http requests to backend 
-import {useState,useEffect} from 'react';
+import {useState} from 'react';
 import axios from 'axios';
 
 /// Components ///

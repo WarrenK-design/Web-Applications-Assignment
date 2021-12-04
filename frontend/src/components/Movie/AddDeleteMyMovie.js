@@ -48,7 +48,7 @@ function AddDeleteMyMovie({movieId}){
     // Get the userInfo piece of state, dont need loading and error 
     const {userInfo} = user;    
     // Get the error, loading and message piece of state, will be used to update the button 
-    const {movieListLoading,movieListMessage,movieListError} = userMovieList;
+    const {movieListMessage,movieListError} = userMovieList;
     // dispatch - Get reference to dispatch function from react-redux for dispatching actions 
     const dispatch = useDispatch();
 
@@ -70,14 +70,14 @@ function AddDeleteMyMovie({movieId}){
         // Set in my movies to false until it is proven to be true 
         setInMyMovies(false);
         // Check if the movie now exist in userInfo myMovies, 
-        userInfo.myMovies.map((movieObj) =>{
+        userInfo.myMovies.forEach((movieObj) =>{
             // Checks if the id exists in the myMovies value 
             if(movieObj.movie._id === movieId){
                 // It exists so set it true 
                 setInMyMovies(true);
               }})
         setLoading(false);
-    },[movieListMessage]) // Call use effect if movieListMessage changes, this is changed when a movie list is updated
+    },[movieListMessage,userInfo.myMovies,movieId]) // Call use effect if movieListMessage changes, this is changed when a movie list is updated
 
 
     /// movieListError = True - Show the error to user, will be a message saying "Movie list could not be updated at this time"

@@ -28,7 +28,8 @@ import AddReview from '../components/Movie/AddReview';
 // Container - Used to structure component 
 // Row       - Container divided up into rows 
 // Col       - Each row can have multiple columns  
-import {Container,Row,Col,Form,Card,Button,Dropdown} from "react-bootstrap";
+// Card      - Used as a container to display info
+import {Container,Row,Col,Card} from "react-bootstrap";
 
 // Redux //
 // Want to give the user an option to submit a review if they are logged in 

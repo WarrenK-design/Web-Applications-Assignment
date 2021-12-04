@@ -19,13 +19,13 @@ import LoadingSpinner from "../Widgets/LoadingSpinner";
 import MessageAlert from "../Widgets/MessageAlert";
 
 /// Bootstrap ///
-// Container - Used to structure component 
 // Row       - Container divided up into rows 
 // Col       - Each row can have multiple columns  
 // Image     - Used for displaying profile image 
 // Button    - Used for the update profile image button
 // Modal     - Used to show input for file  
-import { Container,Row,Col,Image,Button,Modal,Form} from "react-bootstrap";
+// Form      - Used for fillinf out a form
+import {Row,Col,Image,Button,Modal,Form} from "react-bootstrap";
 
 
 // Redux //
@@ -123,7 +123,7 @@ function ProfilePicture(){
                 data: data
             };
             // Send the request 
-            let res = await axios(uploadImageRequest);
+            await axios(uploadImageRequest);
             // Set the succuess meassge -> Will display success message but will also update the profile image as useEffect will be called 
             setUploadSuccessMessage("Profile image has been successfully updated");
             setUploadLoading(false);
@@ -188,7 +188,7 @@ function ProfilePicture(){
             </Button> 
             <Button 
                 variant="primary" 
-                disabled={newProfileImage == ''}
+                disabled={newProfileImage === ''}
                 onClick={handleSubmit}
                 >
                 Upload Image

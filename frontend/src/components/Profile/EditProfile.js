@@ -72,7 +72,7 @@ function EditProfile(){
         setSecondName(userInfo.secondName);
         // reset the state for the update action as we dont want old messages showing when user navigates to this page from a previoud update
         dispatch({type:USER_UPDATE_RESET})
-    },[])
+    },[dispatch,userInfo.email,userInfo.firstName,userInfo.secondName])
 
 
 

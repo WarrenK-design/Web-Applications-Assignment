@@ -9,13 +9,13 @@
 // Link - Used for the link to login route 
 import {useState,useEffect} from 'react';
 import {useNavigate,Link } from "react-router-dom";
-import axios from 'axios';
 
 // Components //
 // LoadingSpinner - Component to show a spinner when data is loading  
-// MessageAlert   - This component is used to display messages to the user, in this case it will be displayed if an error occurs 
+// MovieCard      - Used to display movies in MyMovies section 
+// ProfilePicture - Used to display/edit profile picture
+// EditProfile    - Used to edit the profile
 import LoadingSpinner from "../components/Widgets/LoadingSpinner";
-import MessageAlert from "../components/Widgets/MessageAlert";
 import MovieCard from "../components/Movie/MovieCard";
 import ProfilePicture from '../components/Profile/ProfilePicture';
 import EditProfile from '../components/Profile/EditProfile';
@@ -24,7 +24,7 @@ import EditProfile from '../components/Profile/EditProfile';
 // Container - Used to structure component 
 // Row       - Container divided up into rows 
 // Col       - Each row can have multiple columns  
-import { Container,Row,Col,Image,Card } from "react-bootstrap";
+import { Container,Row,Col,Card } from "react-bootstrap";
 
 // Redux //
 // useSelector - Used to get the redux global state  https://react-redux.js.org/api/hooks

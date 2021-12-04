@@ -12,10 +12,6 @@ import { useNavigate} from "react-router-dom";
 // Bootstrap ///
 import {Button,FormControl,InputGroup,Dropdown,DropdownButton} from "react-bootstrap";
 
-// components //
-import MessageAlert from './MessageAlert';
-
-
 
 /// SearchBar ///
 // Description:
@@ -31,7 +27,6 @@ function SearchBar() {
     const [category, setCategory] = useState("original_title");
     const [keyword, setKeyword]   = useState("");
     const [displayCategory,setDisplayCategory] = useState("Title");
-    const [errorMessage, setErrorMessage] = useState("");
     const [inputType, setInputType] = useState("text")
 
 
@@ -61,7 +56,6 @@ function SearchBar() {
     // an input field for the keyword input 
     return(
         <InputGroup className="px-2">
-            {errorMessage && <MessageAlert variant="danger">errorMessage</MessageAlert>}
             <DropdownButton
                 className="min-vw-25 mw-25"
                 variant="secondary"
