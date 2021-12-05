@@ -10,6 +10,7 @@
     "seedData": "node database/dataSeeding/dataSeeder",
     "test": "jest",
     "testAll": "jest --verbose ./__test__",
+    "testSilent": "jest --silent --verbose ./__test__",
     "testCoverage": "jest --coverage --silent --verbose ./__test__"
   },
   "author": "Warren Kavanagh",

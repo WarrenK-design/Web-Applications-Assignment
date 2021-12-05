@@ -323,7 +323,7 @@ describe("PUT /user/profile", () => {
             // Arrange
             let mockRequest = {firstName:"newFirstName",secondName:"newSecondName",email:"newEmail@test.com"}
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').send(mockRequest);
             // Assert 
             expect(response.statusCode).toBe(200);
             expect(response.type).toBe('application/json')

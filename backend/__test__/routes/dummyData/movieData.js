@@ -39,7 +39,16 @@ const movieData = [
    ],
    "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
    "usa_gross_income": 28699976,
-   "worldwide_gross_income": 28815245
+   "worldwide_gross_income": 28815245,
+   "reviews":[{
+      "reviewer":"John",
+      "headline":"Great movie",
+      "comments":"Really good film",
+      "score":10
+   },
+
+
+]
 },
  {
    "original_title": "The Dark Knight",
@@ -165,7 +174,13 @@ const movieData = [
    ],
    "description": "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more.",
    "usa_gross_income": 37030102,
-   "worldwide_gross_income": 101218804
+   "worldwide_gross_income": 101218804,
+   "reviews":[{
+      "reviewer":1,
+      "headline":"Great movie",
+      "comments":"Really good film",
+      "score":10
+   },]
 },
 ]
 

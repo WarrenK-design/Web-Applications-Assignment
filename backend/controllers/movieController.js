@@ -21,8 +21,9 @@ async function getMovies(req,res,next){
         // Check if there is a category and keyword search 
         const keyword  = req.query.keyword;
         const category = req.query.category; 
+        console.log(category,keyword)
         // If keyword and category are undefined return all movies 
-        if(keyword == 'undefined' && category == 'undefined'){
+        if(typeof keyword === 'undefined' && typeof category === 'undefined'){
             const movies = await Movie.find({}).limit(limitPerPage).skip(limitPerPage*pageNumber);
             res.json(movies);
         }else{
@@ -154,7 +155,7 @@ async function deleteMovieReview(req,res,next){
         if(reviewId && reviewId.length > 0){
             //// Need to first find the movie and review
             const movie   = await Movie.findById(req.params.id);
-            const review = movie.reviews.id(reviewId);
+            const review = movie.reviews.id(reviewId); // Gets the review by id
             // Check there is a review associated with this id
             if(!review){
                 res.status(404);
@@ -176,7 +177,7 @@ async function deleteMovieReview(req,res,next){
         }else{
             // Bad data has been sent 
             res.status(400);
-            res.errormessage = "Please check to ensure a review was selected to be deleted ";
+            res.errormessage = "Please check to ensure a review was selected to be deleted";
             return next(new Error('Theere is no review ID deteccted in the body of the request, could be a problem with the request'));
         }
     }catch(error){
