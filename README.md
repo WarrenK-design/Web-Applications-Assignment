@@ -8,7 +8,10 @@ Any user can search the website and view reviews but a user must sign up to acce
 There are two main directories within this repository.
 ### Backend
 This holds the express REST API which is used to communicate with the database.
-A brief summary of each of the directories/files is shown below. 
+The backend uses the ES6 import syntax by setting the parameter *type* to *module* in the *package.json*. 
+The reason for this was to keep it consistent with react which uses ES6. The backend tests use [jest](https://jestjs.io/) and the [babel](https://babeljs.io/docs/en/babel-plugin-transform-modules-commonjs) module was required to make jest compatiable with ES6, this is why there is a *.babelrc* file in the backend folder, its only used for the *test* environment. 
+
+A brief summary of each of the directories/files is given below. 
 
 1. ***app.js*** - Contains the express app instantition and adds middleware to the application.
 2. ***server.js*** - Imports the Express application from *app.js* and starts the server listening on a port.
