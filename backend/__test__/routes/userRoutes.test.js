@@ -10,8 +10,6 @@ import {jest} from '@jest/globals'
 import app from '../../app.js';
 import User from '../../models/userModel.js'
 import * as gen from '../../utils/generateJWT.js';
-import mongoose from 'mongoose';
-import * as authMiddleware from '../../middleware/authMiddleware.js'
 import jwt from 'jsonwebtoken';
 
 

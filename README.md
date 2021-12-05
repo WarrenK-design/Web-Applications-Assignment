@@ -10,13 +10,14 @@ There are two main directories within this repository.
 This holds the express REST API which is used to communicate with the database.
 A brief summary of each of the directories/files is shown below. 
 
-1. ***index.js*** - Starting point for the application, contains instantiation of express app
-2. ***routes*** - Each sub route has its own route file which uses the Express router to add routes to the express app
-3. ***controllers*** - The controllers are called by the routes and are passed the req, res and next objects. They call database services and return messages to the client. 
-4. ***middleware*** - Contains the middleware for veryfying a JWT token for a protected route and the error middleware for sending back any other response other than a 200 code. 
-5. ***database*** - This directory contains the functionality to connect to the database through Mongoose. It also contains the data to seed the database with to get the application running.
-6. ***models*** - These are the mongoose data object models which map to collections in the database and provide the schema for the collections. 
-7. ***utils*** - A utilitys folder, only one utility for generating a JWT but created more can be added if required.
+1. ***app.js*** - Contains the express app instantition and adds middleware to the application.
+2. ***server.js*** - Imports the Express application from *app.js* and starts the server listening on a port.
+3. ***routes*** - Each sub route has its own route file which uses the Express router to add routes to the express app
+4. ***controllers*** - The controllers are called by the routes and are passed the req, res and next objects. They call database services and return messages to the client. 
+5. ***middleware*** - Contains the middleware for veryfying a JWT token for a protected route and the error middleware for sending back any other response other than a 200 code. 
+6. ***database*** - This directory contains the functionality to connect to the database through Mongoose. It also contains the data to seed the database with to get the application running.
+7. ***models*** - These are the mongoose data object models which map to collections in the database and provide the schema for the collections. 
+8. ***utils*** - A utilitys folder, only one utility for generating a JWT but created more can be added if required.
 
 If new routes are to be added it should follow the structure in the steps below. 
 
@@ -36,7 +37,7 @@ There is a structure for the react components in the subdirectories.
 2. ***components*** - These are smaller compoenets which are used within the screens. These provide specific functionality and are tried to be designed to be as reusable as possible. The functionality within these components could all be placed within the *Screen* components but breaking up the components into smaller components makes it more manageable and easier to reuse components in different screens. For example the ***HomeScreen*** uses the ***MovieCard*** component to display the movies. The ***ProfileScreen*** has a MyMovies section containing the users favourite movies, the ***MovieCard*** component is reused to display the users favourite movies. 
 
 # Running Application 
-There is some configuration before the application can be run. 
+There is some configuration before the application can be run. The frontend and backend need to be running at the same time, open two terminals and run one component in each.
 
 ## Node Modules
 The *Node Modules* directory is not included, the package.json file can be used to install the node modules. 

@@ -8,7 +8,8 @@
     "start": "node server",
     "dev": "nodemon server",
     "seedData": "node database/dataSeeding/dataSeeder",
-    "test": "jest --verbose ./__test__",
+    "test": "jest",
+    "testAll": "jest --verbose ./__test__",
     "testCoverage": "jest --coverage --silent --verbose ./__test__"
   },
   "author": "Warren Kavanagh",
