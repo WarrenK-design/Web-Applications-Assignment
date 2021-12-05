@@ -47,6 +47,12 @@ For the frontend execute the following command.
 cd frontend
 npm install
 ```
+**NOTE** It seems to sometimes occur with NPM you may get an error as shown below.
+```
+Cannot read property 'match' of undefined
+```
+If this occurs delete the ```package-lock.json``` and re run the ```npm install```, it is an issue with npm versions, see [here](https://stackoverflow.com/questions/58404547/cannot-read-property-match-of-undefined-during-npm-install?rq=1).
+
 For the backend execute the following commands. 
 ```
 cd backend
@@ -54,7 +60,11 @@ npm install
 ```
 
 ## Database 
-There should be a MongoDB instance running on your local machine on port ```27017```. The connection URI is located in ```backend\.env``` if this needs to be changed. 
+There should be a MongoDB instance running on your local machine on port ```27017```. The connection URI is located in ```backend\.env```. **ONLY CHANGE IF MONGO IS NOT RUNNING ON PORT 27017**
+The connection URI default value in the .env file is shown below.
+```
+MONGO_LOCAL_URI=mongodb://localhost:27017/WebApplicationsProject
+```
 
 Execute the following commands to set up the database. 
 
@@ -62,9 +72,11 @@ Execute the following commands to set up the database.
 cd backend
 npm run seedData
 ```
+A success message shoul be displayed.
 A database named ```WebApplicationsProject``` has been created with two collections ```users``` and ```movies```. Data has been seeded to these collections using the data in ```backend\database\data```.  
+The seeded data is a number of movies from the file ```backend\database\data\movieData.js``` and some default users from the file ```backend\database\data\users.js```.
 
-***IMPORTANT*** Running ```npm run seedData``` again will reset any data in the database including newly created profiles, MyMovies or any profile changes.
+**IMPORTANT** Running ```npm run seedData``` again will reset any data in the database including newly created profiles, MyMovies or any profile changes.
 
 ## Backend 
 It assumes that ```5000``` is free to run the API on. The backend application can be run in two modes, *development* or *production*.
