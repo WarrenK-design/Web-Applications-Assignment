@@ -18,12 +18,21 @@ A brief summary of each of the directories/files is shown below.
 6. ***database*** - This directory contains the functionality to connect to the database through Mongoose. It also contains the data to seed the database with to get the application running.
 7. ***models*** - These are the mongoose data object models which map to collections in the database and provide the schema for the collections. 
 8. ***utils*** - A utilitys folder, only one utility for generating a JWT but created more can be added if required.
+9. ***__test__*** - These are the unit tests for each of the *controllers* associated with handling requests from clients. 
 
 If new routes are to be added it should follow the structure in the steps below. 
 
 1. ***Create Route File*** - Create a route file in the routes directory and export the router. 
 2. ***Add routes to app*** - Import the router in the *index.js* file and use it for a sub route. 
 3. ***Create Controller File*** - Create a file in the *controllers* directory associated with this new route. The controller will contain a function per route which handles the request and response. 
+
+In the *package.json* there are a few useful scripts. 
+1. ***start*** - Starts the server see section *Running Application* below. 
+2. ***dev*** - Starts the server in dev mode see section *Running Application* below.
+3. ***seedData*** - Used to seed the database with initial dump see section *Running Application* below.
+4. ***test*** - Runs all test files. 
+5. ***testSilent*** - Surpresses console log statements which tests are running. 
+6. ***testCoverage*** - Runs the tests and generates a coverage report.
 
 ### Frontend 
 This holds the react front end project which communicates with the backend. There are two main sub directorys under the ***frontend*** directory. 
