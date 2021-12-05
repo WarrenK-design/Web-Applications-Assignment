@@ -11,6 +11,7 @@ import app from '../../app.js';
 import User from '../../models/userModel.js'
 import * as gen from '../../utils/generateJWT.js';
 import jwt from 'jsonwebtoken';
+import fs from 'fs';
 
 
 /// Test 1 ///
@@ -293,7 +294,77 @@ describe("POST /user/login", () => {
     })
 })
 
+
 /// Test 3 ///
+// Desription:
+//  This test is for getting a users profile 
+// Route:
+//  GET /user/profile
+describe("GET /user/profile", () => { 
+        let mockUser;
+        // beforeEach ///
+        // Here the auth middleware is mocked as we dont care about the authorisation
+        // the mockUser will be tested if it is updated in each test but reset before each test 
+        beforeEach(async () => {
+            jwt.verify = jest.fn();
+            jwt.verify.mockReturnValue("decodedToken");
+            mockUser = {_id:1,firstName:"John",secondName:"Doe",email:"JohnDoe123@gmail.com",isAdmin:false,myMovies:"StarWars"}
+            User.findById = jest.fn().mockImplementation(() => { return mockUser});
+            mockUser.select = jest.fn().mockImplementation(() => {return mockUser})
+            mockUser.save = jest.fn();
+            mockUser.populate = jest.fn().mockImplementation(() => {return mockUser});
+        });
+        
+        // Data correctly formatted 
+        describe("Correct data sent", () =>{
+            // return the users profile 
+            test("Should return 200, user profile found for user id", async ()=>{
+                // Arrange
+                // No arrange here already returning user for mock database in before each
+                // Act
+                const response = await request(app).get('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');
+                // Assert
+                expect(User.findById.mock.calls.length).toBe(2); // Called in auth middleware too 
+                expect(response.statusCode).toBe(200);
+                expect(response.body._id).toBe(mockUser._id);
+                expect(response.body._firstName).toBe(mockUser._firstName);
+                expect(response.body.secondName).toBe(mockUser.secondName);
+                expect(response.body.email).toBe(mockUser.email);
+                expect(response.body.isAdmin).toBe(mockUser.isAdmin);
+                expect(response.body.myMovies).toBe(mockUser.myMovies);
+            })
+        })
+
+        // Bad data sent 
+        describe("Bad data sent", () =>{
+            // No user found 404
+            test("Should be 404, no user found relating to this ID", async () => {
+                // Arrange
+                mockUser.populate.mockImplementationOnce(() => { return ''});
+                // Act 
+                const response = await request(app).get('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');
+                // Assert
+                expect(response.statusCode).toBe(404);
+                expect(response.body.errormessage).toBe("Profile could not be found at this time, try again later")
+            })
+            // Server eror 500
+            test("Should be 500, database throws an error", async () => {
+                // Arrange
+                mockUser.populate.mockImplementationOnce(() => {throw new Error("Database Error")});
+                // Act 
+                const response = await request(app).get('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');
+                // Assert
+                expect(response.statusCode).toBe(500);
+                expect(response.body.errormessage).toBe("Could not retrieve users profile at this time, sorry try again later")
+            })
+        })
+
+
+
+})
+
+
+/// Test 4 ///
 // Desription:
 //  This test is for updating a users profile 
 // Route:
@@ -381,6 +452,7 @@ describe("PUT /user/profile", () => {
             // Act 
             const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);
             // Assert 
+            console.log("HERE",response.body)
             expect(response.statusCode).toBe(200);
             expect(response.type).toBe('application/json')
             expect(response.body.firstName).toBe(mockUser.firstName);
@@ -453,7 +525,96 @@ describe("PUT /user/profile", () => {
 
     })
 
-/// Test 4 ///
+/// Test 5 ///
+// Desription:
+//  This test is for deleteing a users profile 
+// Route:
+//  DELETE /user/profile
+describe("DELETE /user/profile", () => { 
+    let mockUser;
+    // beforeEach ///
+    // Here the auth middleware is mocked as we dont care about the authorisation
+    // the mockUser will be tested if it is updated in each test but reset before each test 
+    beforeEach(async () => {
+        jwt.verify = jest.fn();
+        jwt.verify.mockReturnValue("decodedToken");
+        mockUser = {_id:1,firstName:"John",secondName:"Doe",email:"JohnDoe123@gmail.com",isAdmin:false,myMovies:"StarWars"}
+        User.findById = jest.fn().mockImplementation(() => { return mockUser});
+        mockUser.select = jest.fn().mockImplementation(() => {return mockUser})
+        mockUser.save = jest.fn();
+        mockUser.populate = jest.fn().mockImplementation(() => {return mockUser});
+    });
+
+    // Data sent ok 
+    describe("Correct Data", () =>{
+        // User profile succesfully removed with default image 
+        test("Should return 200, profile deleted successfully and user has default profile image", async () =>{
+            // Arrange
+            mockUser.profileImage = "default_profile_image.jpg";
+            User.findByIdAndRemove = jest.fn()
+            User.findByIdAndRemove.mockReturnValue({email:"USER_WITH_DEFAULT_IMAGE"})
+            // Act
+            const response = await request(app).delete('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');            
+            // Assert
+            console.log(response.body)
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBe("User USER_WITH_DEFAULT_IMAGE has been deleted")
+        })
+        // User profile succesfully removed with custom image 
+        test("Should return 200, profile deleted successfully, users custom profile image exists and deleted", async () =>{
+            // Arrange
+            mockUser.profileImage = "custom_profile_image.jpg";
+            fs.existsSync = jest.fn().mockReturnValue(true);
+            fs.unlinkSync = jest.fn();
+            User.findByIdAndRemove = jest.fn()
+            User.findByIdAndRemove.mockReturnValue({email:"USER_WITH_CUSTOM_IMAGE"})
+            // Act
+            const response = await request(app).delete('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');            
+            // Assert
+            expect(fs.unlinkSync.mock.calls.length).toBe(1);
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBe("User USER_WITH_CUSTOM_IMAGE has been deleted")
+        })
+        // Users profile deleted, they have custom profile image but cannot be found in filesystem, 
+        test("Should return 200, profile deleted successfully, users custom profile image does not exists", async () =>{
+            // Arrange
+            mockUser.profileImage = "custom_profile_image.jpg";
+            fs.existsSync = jest.fn().mockReturnValue(false);
+            fs.unlinkSync = jest.fn();
+            User.findByIdAndRemove = jest.fn()
+            User.findByIdAndRemove.mockReturnValue({email:"USER_WITH_CUSTOM_IMAGE"})
+            // Act
+            const response = await request(app).delete('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');            
+            // Assert
+            expect(fs.unlinkSync.mock.calls.length).toBe(0);
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBe("User USER_WITH_CUSTOM_IMAGE has been deleted")
+        })
+
+    })
+    // Bad data sent 
+    describe("Server errors", () =>{
+        // Database throws an error 
+        test("Should return 500, database throws an error", async () => {
+            // Arrange
+            mockUser.profileImage = "custom_profile_image.jpg";
+            User.findByIdAndRemove = jest.fn()
+            User.findByIdAndRemove.mockImplementation(() =>{throw new Error("Database error")});
+            // Act
+            const response = await request(app).delete('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json');            
+            // Assert
+            console.log(response);
+            expect(response.statusCode).toBe(500);
+            expect(response.body.errormessage).toBe("Could not delete user profile at this time, please try again later")
+        })
+    })
+
+
+})
+
+
+
+/// Test 6 ///
 // Desription:
 //  This test is for getting a users profile Image
 // Route:
@@ -531,7 +692,7 @@ describe("GET /user/profileImage", () => {
         });
     })
 
-/// Test 5 ///
+/// Test 7 ///
 // Desription:
 //  These tests are for adding to a users MyMovie list 
 // Route:
@@ -611,7 +772,7 @@ describe("POST /user/mymovies", () => {
      })
 })
 
-/// Test 6 ///
+/// Test 8 ///
 // Desription:
 //  These tests are for adding to a users MyMovie list 
 // Route:

@@ -151,7 +151,7 @@ async function putProfile(req,res,next) {
             // Even if it hasnt been changed, when you assign it same value it will cause hashing to run again hashing 
             // the previously stored value again which is needless 
             if(req.body.password){
-                user.password = req.body.password || user.password;
+                user.password = req.body.password
             };
             // Save the user, on save will call the middle ware to hash password if it has changed 
             await user.save()
