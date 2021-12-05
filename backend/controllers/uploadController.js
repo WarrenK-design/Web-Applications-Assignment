@@ -22,8 +22,6 @@ const __dirname = path.resolve();
 //  Private Route 
 async function postProfileImage(req,res,next) {
     try{
-        // Get the current reference 
-        let currentProfileRef = req.user.profileImage;
         // Check if the reference is the default reference, if so we need to update the reference
         // note the default reference is set in the userModel.js file 
         if(req.user.profileImage === "default_profile_image.jpg"){
@@ -32,17 +30,17 @@ async function postProfileImage(req,res,next) {
             let update = {profileImage: `profileImage-${req.user._id}${path.extname(req.file.originalname)}`}
             let existingUser = await User.findOneAndUpdate(filter, update,{new: true});
             //Return and refrence to location of new file, this is not the actual file returned 
-            res.status(200).json({_id:existingUser._id,profileImage:existingUser.profileImage});
+            return res.status(200).json({_id:existingUser._id,profileImage:existingUser.profileImage});
         }else{
             // No need to update the reference, the photo in the file has been overwrited, same name
-            res.status(200).json({_id:req.user._id,profileImage:req.user.profileImage});
+            return res.status(200).json({_id:req.user._id,profileImage:req.user.profileImage});
         }
     }catch(error){
         // If this block is reached then there is a server error 
         console.error(error);
         res.errormessage = "Profile image could not be updated at this time"
         res.status(500);
-        next(error); 
+        return next(error); 
     }
 }
 

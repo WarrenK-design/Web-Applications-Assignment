@@ -34,7 +34,7 @@ router.post('/login',authUser);
 //  Route for getting a users personal profile information 
 // Access Control:
 //  Private Route 
-router.get('/profile',protectdRoute,getProfile);
+//router.get('/profile',protectdRoute,getProfile);
 
 /// PUT /user/profile ///
 // Description:

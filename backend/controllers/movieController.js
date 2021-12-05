@@ -21,7 +21,6 @@ async function getMovies(req,res,next){
         // Check if there is a category and keyword search 
         const keyword  = req.query.keyword;
         const category = req.query.category; 
-        console.log(category,keyword)
         // If keyword and category are undefined return all movies 
         if(typeof keyword === 'undefined' && typeof category === 'undefined'){
             const movies = await Movie.find({}).limit(limitPerPage).skip(limitPerPage*pageNumber);

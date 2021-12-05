@@ -4,8 +4,6 @@
 
 /// Imports ///
 // request     - From the supertest mosudle, used to send http request in testing environment 
-// express     - The backend API framework 
-// userRouter  - The routes which we are testing  
 import request from 'supertest';
 import {jest} from '@jest/globals'
 import app from '../../app.js';
