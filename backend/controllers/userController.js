@@ -7,6 +7,7 @@
 import User from '../models/userModel.js';
 import {genJWT} from '../utils/generateJWT.js'
 import path from 'path';
+import fs from 'fs';
 
 // Set the __dirname, using modules syntax so not available by efault 
 const __dirname = path.resolve(); 
@@ -104,6 +105,17 @@ async function getProfile(req,res,next) {
 //  Private Route 
 async function deleteProfile(req, res, next){
     try{
+        // First get the users details
+        let user = await User.findById(req.user._id);
+        // If the profile image is not the deafult stock photo, delete there personal photo 
+        if(user.profileImage != "default_profile_image.jpg"){
+            let imagePath = `${__dirname}/uploads/profileImages/${user.profileImage}`;
+            // Just ensure the file exists 
+            if (fs.existsSync(imagePath)){
+                fs.unlinkSync(imagePath);
+            }
+        }
+        // Delete the user in the database
         let deletedUser = await User.findByIdAndRemove(req.user._id);
         res.json({
             message: `User ${deletedUser.email} has been deleted`

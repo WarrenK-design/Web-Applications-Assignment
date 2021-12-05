@@ -15,10 +15,12 @@ import {useNavigate,Link } from "react-router-dom";
 // MovieCard      - Used to display movies in MyMovies section 
 // ProfilePicture - Used to display/edit profile picture
 // EditProfile    - Used to edit the profile
+// DeleteProfile  - Used for proviing functionality to delete profile 
 import LoadingSpinner from "../components/Widgets/LoadingSpinner";
 import MovieCard from "../components/Movie/MovieCard";
 import ProfilePicture from '../components/Profile/ProfilePicture';
 import EditProfile from '../components/Profile/EditProfile';
+import DeleteProfile from '../components/Profile/DeleteProfile';
 
 /// Bootstrap ///
 // Container - Used to structure component 
@@ -81,11 +83,7 @@ function ProfileScreen() {
       {userInfo && 
       <>
       <ProfilePicture/>
-      <Row>
-        <Col className="text-center">
-          <h1>{userInfo.firstName} {userInfo.secondName}</h1>
-        </Col>
-      </Row>
+      <DeleteProfile />
       <Row className="mb-3">
         <Col>
           <EditProfile/>

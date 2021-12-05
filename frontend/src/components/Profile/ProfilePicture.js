@@ -152,6 +152,11 @@ function ProfilePicture(){
             <Image className="img-thumbnail mx-auto" src={`data:image/png;base64,${profileImage}`} roundedCircle fluid/>
             </Col>
         </Row>
+        <Row>
+        <Col className="text-center">
+          <h1>{userInfo.firstName} {userInfo.secondName}</h1>
+        </Col>
+        </Row>
         <Row className="pb-3">
             <Col className="text-center">
               <Button
