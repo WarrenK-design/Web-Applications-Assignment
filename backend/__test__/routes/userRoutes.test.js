@@ -408,7 +408,7 @@ describe("PUT /user/profile", () => {
              // Arrange
             let mockRequest = {email:"newEmail@test.com"}
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').send(mockRequest);
             // Assert 
             expect(response.statusCode).toBe(200);
             expect(response.type).toBe('application/json')
@@ -422,7 +422,7 @@ describe("PUT /user/profile", () => {
             // Arrange
             let mockRequest = {firstName:"newFirstName"}
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type','application/json').send(mockRequest);
             // Assert 
             expect(response.statusCode).toBe(200);
             expect(response.type).toBe('application/json')
@@ -436,7 +436,7 @@ describe("PUT /user/profile", () => {
             // Arrange
             let mockRequest = {secondName:"newSecondName"}
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type','application/json').send(mockRequest);
             // Assert 
             expect(response.statusCode).toBe(200);
             expect(response.type).toBe('application/json')
@@ -450,7 +450,7 @@ describe("PUT /user/profile", () => {
             // Arrange
             let mockRequest = {password:"newPassword"}
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type','application/json').send(mockRequest);
             // Assert 
             console.log("HERE",response.body)
             expect(response.statusCode).toBe(200);
@@ -485,7 +485,7 @@ describe("PUT /user/profile", () => {
             let mockRequest = {firstName:"newFirstName",secondName:"newSecondName",email:"newEmail@test.com"}
             User.findById.mockReturnValueOnce('');
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);            
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type','application/json').send(mockRequest);            
             // Assert
             expect(response.statusCode).toBe(404);
             expect(response.body.errormessage).toBe("No reference to the user in the system");
@@ -503,7 +503,7 @@ describe("PUT /user/profile", () => {
                 throw e;
             })
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);            
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type','application/json').send(mockRequest);            
             // Assert
             expect(response.statusCode).toBe(409);
             expect(response.body.errormessage).toBe("A user with this email already exists within the system");
@@ -517,7 +517,7 @@ describe("PUT /user/profile", () => {
                 let e = new Error("MockError");
             })
             // Act 
-            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type', 'application/json').set('Content-Type', 'application/json').send(mockRequest);            
+            const response = await request(app).put('/user/profile/').set('authorization', "Bearer Token").set('Content-Type','application/json').send(mockRequest);            
             // Assert
             expect(response.statusCode).toBe(500);
             expect(response.body.errormessage).toBe("Could not update users profile at this time, sorry try again later");
