@@ -22,12 +22,19 @@ async function authUser(req,res,next) {
     try{
         // Get the email and password sent in the body 
         let {email, password} = req.body;
+        // Check that data has been sent 
+        if(typeof email ==='undefined' || typeof password === 'undefined'){
+            // data is missing bad request 
+            res.status(400);
+            res.errormessage ="A email and password is required to log a user in";
+            return next(new Error("The client has not sent the required email and password information"));
+        }
         // Find the user 
         let user = await User.findOne({email}).populate('myMovies.movie')
         // Check if user is null, if it is pass error to middleware  
         if (user === null){
             // No user found for this email 
-            res.status(401);
+            res.status(404);
             res.errormessage = "No account linked with this email, please try again";
             return next(new Error("No user found relating to this email"));
         }
@@ -54,6 +61,7 @@ async function authUser(req,res,next) {
     }catch(error){
         // If this statement is reached then it is an intrnal serer error that needs to be invesstigated 
         // Set a user message to be displayed
+        console.log(error)
         res.errormessage = "Could not authenticate user at this time, sorry try again later"
         return next(error);
     }
@@ -117,7 +125,7 @@ async function putProfile(req,res,next) {
             await user.save()
             // user.save() will not populate movies, we want movies populated for frontend, get them 
             let updatedUser = await User.findById(req.user._id).populate('myMovies.movie')
-            // Return user attributes and gen JWT 
+            // Return user attributes and gen JWT, 204 entity updated 
             res.json({
                 id: updatedUser._id,
                 firstName: updatedUser.firstName,
@@ -162,6 +170,13 @@ async function regUser(req,res,next) {
     try{
         // Get the users signup info from the body 
         let {firstName, secondName, email, password} = req.body;
+        // Check that data has been sent 
+        if(typeof firstName ==='undefined' || typeof secondName === 'undefined' || typeof email === 'undefined' || typeof password ==='undefined'){
+            // data is missing bad request 
+            res.status(400);
+            res.errormessage ="A first name, second name, email and password is required to register a user";
+            return next(new Error("The client has not sent the required information to register the user"));
+        }
         // Check if a user by this email already exists 
         let existingUser = await User.findOne({email});
         if (existingUser){
@@ -186,9 +201,10 @@ async function regUser(req,res,next) {
             });
         }else{
             // User could not be created 
-            res.status(400);
-            res.errormessage = "Please check to ensure all fileds are correct, user could not be created";
-            return next(new Error('The user model could not create a user but did not throw an error, could possibly be database issue'));
+            throw new Error('The create command on the database has been executed but no created user returned');
+         //   res.status(500);
+           // res.errormessage = "Please check to ensure all fileds are correct, user could not be created";
+           // return next(new Error('The user model could not create a user but did not throw an error, could possibly be database issue'));
         }
     }catch(error){
         // If this block is reached then there is a server error 

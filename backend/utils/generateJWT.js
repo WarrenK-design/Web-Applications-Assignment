@@ -17,4 +17,4 @@ function genJWT(id) {
     return token;
 } 
 
-export {genJWT}
+export {genJWT};

@@ -1,14 +1,15 @@
 {
+  "type": "module",
   "name": "backend",
   "version": "1.0.0",
   "description": "The backend API component of the MERN stack ",
-  "main": "index.js",
-  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index",
+    "start": "node server",
+    "dev": "nodemon server",
     "seedData": "node database/dataSeeding/dataSeeder",
-    "test": "jest --verbose ./__test__"
+    "test": "jest --verbose ./__test__",
+    "testCoverage": "jest --coverage --silent --verbose ./__test__"
   },
   "author": "Warren Kavanagh",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "multer": "^1.4.3"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "jest": "^27.3.1",
     "nodemon": "^2.0.14",
     "supertest": "^6.1.6"
