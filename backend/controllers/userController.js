@@ -97,6 +97,26 @@ async function getProfile(req,res,next) {
 }
 
 
+/// deleteProfile ///
+// Description:
+//  This is used to delete a users profile
+// Access Control:
+//  Private Route 
+async function deleteProfile(req, res, next){
+    try{
+        let deletedUser = await User.findByIdAndRemove(req.user._id);
+        res.json({
+            message: `User ${deletedUser.email} has been deleted`
+        })
+    }catch(error){
+        // If this block is reached then there is a server error 
+        console.error(error);
+        res.errormessage = "Could not delete user profile at this time, please try again later"
+        next(error);
+    }
+}
+
+
 /// putProfile ///
 // Description:
 //  This function is used to update the users profile 
@@ -360,4 +380,4 @@ async function deleteMyMovies(req,res,next){
     }
 }
 
-export {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies,putProfile};
+export {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies,putProfile,deleteProfile};

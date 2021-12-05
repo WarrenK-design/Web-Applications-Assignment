@@ -6,7 +6,7 @@
 // 
 // protectedRoute - This middleware ensures a user is signed in 
 import express from 'express';
-import {authUser,getProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies,putProfile} from '../controllers/userController.js';
+import {authUser,getProfile,deleteProfile,regUser,getProfileImage,postMyMovies,deleteMyMovies,putProfile} from '../controllers/userController.js';
 import { protectdRoute } from '../middleware/authMiddleware.js';
 
 /// Variables ///
@@ -42,6 +42,13 @@ router.get('/profile',protectdRoute,getProfile);
 // Access Control 
 //  Private Route 
 router.put('/profile',protectdRoute,putProfile)
+
+/// DELETE /user/profile ///
+// Description:
+//  Route for deleteing a users profile
+// Access Control 
+//  Private Route 
+router.delete('/profile',protectdRoute,deleteProfile)
 
 /// GET /user/profileimage ///
 // Description:
