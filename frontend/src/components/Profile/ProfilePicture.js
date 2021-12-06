@@ -188,6 +188,9 @@ function ProfilePicture(){
             <Button variant="secondary" onClick={(e)=>{
                 e.preventDefault();
                 setShowModal(false);
+                setNewProfileImage("");
+                setUploadSuccessMessage("");
+                setUploadError("");
             }}>
                 Close
             </Button> 
