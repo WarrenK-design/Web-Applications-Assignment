@@ -78,6 +78,7 @@ function HomeScreen() {
         }
         // Set the state for the movies and loading to false 
         setMovies(res.data);
+        window.scrollTo(0, 0);
         setLoading(false);
       }catch(error){
         // Log the error 
