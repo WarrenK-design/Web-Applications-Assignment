@@ -71,7 +71,6 @@ function HomeScreen() {
             }
         // Send the request with axios, will return users details 
         const res = await axios(moviesRequest);
-        console.log(res.data)
         // Check if results are empty 
         if(res.data.length === 0){
           // Set the no results message
